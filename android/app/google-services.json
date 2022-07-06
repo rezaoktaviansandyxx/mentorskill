@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1030438134466",
+    "project_id": "mentorskill-eef4f",
+    "storage_bucket": "mentorskill-eef4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030438134466:android:7dfa3d2ee444ff97cd915b",
+        "android_client_info": {
+          "package_name": "com.example.mentorskill"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030438134466-uh47f46d9mgavhopi7i46u8bv1akbo7p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mentorskill",
+            "certificate_hash": "fd0081453a2ed77e09828f1a087275bd744e1331"
+          }
+        },
+        {
+          "client_id": "1030438134466-e2ak3np4rptl15e7v9amjn5c09jdp8r7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEL76pxjzqJ2bbo4n-LzaT0gSTmnQkSd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030438134466-e2ak3np4rptl15e7v9amjn5c09jdp8r7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
