@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:mentorskill/controller/login.dart';
 
 class OnBoardingPage extends StatefulWidget {
   @override
@@ -51,7 +52,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           title: 'Langsung belajar dari ahlinya',
           body:
               '"Semua perkembangan tergantung dari aktivitasnya. Tidak akan ada pembangunan secara fisik maupun intelektual tanpa adanya usaha, di mana usaha tersebut berarti bekerja keras." - Calvin Coolidge',
-          image: Image.asset('assets/images/mentoring2.png', width: 350,),
+          image: Image.asset(
+            'assets/images/mentoring2.png',
+            width: 350,
+          ),
           decoration: pageDecoration,
         ),
       ],
@@ -67,7 +71,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       skip: const Text('Skip', style: TextStyle(fontWeight: FontWeight.w600)),
       next: const Icon(Icons.arrow_forward),
       done: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Login()));
+        },
         child: Text(
           'Mulai',
           style: GoogleFonts.poppins(textStyle: style3),
@@ -98,16 +105,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: const Center(child: Text("This is the screen after Introduction")),
     );
   }
 }
