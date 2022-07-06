@@ -1,6 +1,11 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/controller/login.dart';
+import 'package:mentorskill/model/user_model.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -22,6 +27,7 @@ class _RegisterState extends State<Register> {
   //variabel
   final _formKey = GlobalKey<FormState>();
   bool isHiddenPassword = true;
+  final _auth = FirebaseAuth.instance;
 
   void _togglePasswordView() {
     setState(() {
@@ -68,7 +74,9 @@ class _RegisterState extends State<Register> {
                   passwordText(),
                   cPasswordText(),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      signUp(emailController.text, passController.text);
+                    },
                     child: Text(
                       'Daftar',
                       style: GoogleFonts.poppins(textStyle: style),
@@ -184,14 +192,14 @@ class _RegisterState extends State<Register> {
         validator: (value) {
           if (value!.isEmpty) {
             return "Masukkan Password";
-          } else if (value != passController) {
+          } else if (value != passController.text) {
             return 'Tidak Sama';
           }
           return null;
         },
         obscureText: isHiddenPassword,
         decoration: InputDecoration(
-          labelText: 'Password',
+          labelText: 'Konfirmasi Password',
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: 3, color: Colors.blue),
             borderRadius: BorderRadius.circular(15),
@@ -207,4 +215,48 @@ class _RegisterState extends State<Register> {
           ),
         ),
       );
+
+  void signUp(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        postDetailsToFirestore();
+      }).catchError((e) {
+        var errorSnackbar = SnackBar(
+          content: Text('Akun Sudah Digunakan'),
+          duration: Duration(milliseconds: 700),
+          backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(errorSnackbar);
+      });
+    }
+  }
+
+  postDetailsToFirestore() async {
+    //calling our firestore
+    //calling our user model
+    //sending these value
+    final firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
+
+    //writing all the value
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+    userModel.nama = nameController.text;
+
+    await firebaseFirestore
+        .collection('users')
+        .doc(user.uid)
+        .set(userModel.toMap());
+    var snackBar = SnackBar(
+      content: Text('Akun Berhasil di Buat'),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => Login()), (route) => false);
+  }
 }

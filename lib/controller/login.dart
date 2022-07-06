@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/controller/register.dart';
@@ -14,6 +15,9 @@ class _LoginState extends State<Login> {
   TextStyle style = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
   TextStyle style2 = TextStyle(fontSize: 20);
   TextStyle style3 = TextStyle(fontSize: 20, color: Colors.white);
+
+  //firebase
+  final _auth = FirebaseAuth.instance;
 
   //controller
   TextEditingController emailController = TextEditingController();
@@ -67,7 +71,9 @@ class _LoginState extends State<Login> {
                   emailText(),
                   passwordText(),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      signIn(emailController.text, passController.text);
+                    },
                     child: Text(
                       'Login',
                       style: GoogleFonts.poppins(textStyle: style3),
@@ -112,6 +118,28 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  void signIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) {
+        var snackbar = SnackBar(
+          content: Text('Anda berhasil masuk'),
+          duration: Duration(milliseconds: 700),
+          backgroundColor: Colors.green,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+      }).catchError((e) {
+        var errorSnackbar = SnackBar(
+          content: Text('Email/Password Salah'),
+          duration: Duration(milliseconds: 700),
+          backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(errorSnackbar);
+      });
+    }
   }
 
   TextFormField passwordText() => TextFormField(

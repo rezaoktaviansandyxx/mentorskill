@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1030438134466:android:7dfa3d2ee444ff97cd915b",
+        "mobilesdk_app_id": "1:1030438134466:android:a3a611e1dea5bda2cd915b",
         "android_client_info": {
           "package_name": "com.example.mentorskill"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1030438134466-uh47f46d9mgavhopi7i46u8bv1akbo7p.apps.googleusercontent.com",
+          "client_id": "1030438134466-r7rs8fr65psir2stvq75p9n0r0lqmg6f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.mentorskill",
