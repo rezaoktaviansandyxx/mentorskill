@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentorskill/controller/register.dart';
+import 'package:mentorskill/controller/login.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   //style
-  TextStyle style = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
+  TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
   TextStyle style2 = TextStyle(fontSize: 20);
-  TextStyle style3 = TextStyle(fontSize: 20, color: Colors.white);
-
+  TextStyle style3 = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
   //controller
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
-
+  TextEditingController cPassController = TextEditingController();
   //variabel
   final _formKey = GlobalKey<FormState>();
   bool isHiddenPassword = true;
@@ -58,19 +58,20 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Login',
-                      style: GoogleFonts.poppins(textStyle: style),
-                    ),
-                  ),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Daftar Akun',
+                        style: GoogleFonts.poppins(textStyle: style3),
+                      )),
+                  nameText(),
                   emailText(),
                   passwordText(),
+                  cPasswordText(),
                   ElevatedButton(
                     onPressed: () {},
                     child: Text(
-                      'Login',
-                      style: GoogleFonts.poppins(textStyle: style3),
+                      'Daftar',
+                      style: GoogleFonts.poppins(textStyle: style),
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
@@ -85,17 +86,19 @@ class _LoginState extends State<Login> {
                     color: Colors.black,
                   ),
                   Text(
-                    'Daftar Sekarang',
+                    'Sudah Punya Akun?',
                     style: GoogleFonts.poppins(textStyle: style2),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Register()));
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                          (route) => false);
                     },
                     child: Text(
-                      'Daftar',
-                      style: GoogleFonts.poppins(textStyle: style3),
+                      'Login',
+                      style: GoogleFonts.poppins(textStyle: style),
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
@@ -114,6 +117,40 @@ class _LoginState extends State<Login> {
     );
   }
 
+  TextFormField nameText() => TextFormField(
+        controller: nameController,
+        decoration: InputDecoration(
+            labelText: 'Nama Lengkap',
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 3, color: Colors.blue),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 3, color: Colors.blue),
+              borderRadius: BorderRadius.circular(15),
+            )),
+      );
+  TextFormField emailText() => TextFormField(
+        controller: emailController,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "Masukkan Email";
+          } else {
+            return null;
+          }
+        },
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            labelText: 'Email',
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 3, color: Colors.blue),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 3, color: Colors.blue),
+              borderRadius: BorderRadius.circular(15),
+            )),
+      );
   TextFormField passwordText() => TextFormField(
         controller: passController,
         validator: (value) {
@@ -142,25 +179,32 @@ class _LoginState extends State<Login> {
         ),
       );
 
-  TextFormField emailText() => TextFormField(
-        controller: emailController,
+  TextFormField cPasswordText() => TextFormField(
+        controller: cPassController,
         validator: (value) {
           if (value!.isEmpty) {
-            return "Masukkan Email";
-          } else {
-            return null;
+            return "Masukkan Password";
+          } else if (value != passController) {
+            return 'Tidak Sama';
           }
+          return null;
         },
-        keyboardType: TextInputType.emailAddress,
+        obscureText: isHiddenPassword,
         decoration: InputDecoration(
-            labelText: 'Email',
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: 3, color: Colors.blue),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: 3, color: Colors.blue),
-              borderRadius: BorderRadius.circular(15),
-            )),
+          labelText: 'Password',
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 3, color: Colors.blue),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 3, color: Colors.blue),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          suffix: GestureDetector(
+            onTap: _togglePasswordView,
+            child: Icon(
+                isHiddenPassword ? Icons.visibility : Icons.visibility_off),
+          ),
+        ),
       );
 }
