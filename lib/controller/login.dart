@@ -131,6 +131,8 @@ class _LoginState extends State<Login> {
           duration: Duration(milliseconds: 700),
           backgroundColor: Colors.green,
         );
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ChooseMajors()));
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }).catchError((e) {
         var errorSnackbar = SnackBar(
@@ -140,10 +142,6 @@ class _LoginState extends State<Login> {
         );
         ScaffoldMessenger.of(context).showSnackBar(errorSnackbar);
       });
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => ChooseMajors()),
-          (route) => false);
     }
   }
 
