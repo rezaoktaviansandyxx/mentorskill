@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/controller/register.dart';
+import 'package:mentorskill/page/choose_majors.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -139,6 +140,10 @@ class _LoginState extends State<Login> {
         );
         ScaffoldMessenger.of(context).showSnackBar(errorSnackbar);
       });
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => ChooseMajors()),
+          (route) => false);
     }
   }
 
