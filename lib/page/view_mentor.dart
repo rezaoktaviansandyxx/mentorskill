@@ -16,12 +16,12 @@ class ViewMentor extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/mentor2.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: AssetImage("assets/images/mentor2.png"),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
             ),
           ),
           Expanded(
