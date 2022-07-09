@@ -28,7 +28,12 @@ class _ChooseMentorState extends State<ChooseMentor> {
       floatingActionButton: ElevatedButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Payment()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Payment(
+                        selectedMentor: selectedMentor,
+                        selectPayment: widget.select,
+                      )));
         },
         child: Text(
           'Bayar',

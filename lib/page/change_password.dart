@@ -212,6 +212,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           // + error.toString()
           var errorSnackBar = SnackBar(
             content: Text('Password Tidak Bisa Diganti'),
+            duration: Duration(milliseconds: 700),
             backgroundColor: Colors.red,
           );
           ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
@@ -219,13 +220,15 @@ class _ChangePasswordState extends State<ChangePassword> {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           var eSnackBar = SnackBar(
-            content: Text('Tidak ada user yang ditemukan untuk email itu'),
+            content: Text('User tidak ditemukan'),
+            duration: Duration(milliseconds: 700),
             backgroundColor: Colors.red,
           );
           ScaffoldMessenger.of(context).showSnackBar(eSnackBar);
         } else if (e.code == 'wrong-password') {
           var errSnackBar = SnackBar(
-            content: Text('Kata sandi salah untuk user tersebut.'),
+            content: Text('Kata sandi lama salah'),
+            duration: Duration(milliseconds: 700),
             backgroundColor: Colors.red,
           );
           ScaffoldMessenger.of(context).showSnackBar(errSnackBar);

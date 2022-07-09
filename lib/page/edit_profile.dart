@@ -242,6 +242,7 @@ class _EditProfileState extends State<EditProfile> {
 
   TextFormField handphoneText() => TextFormField(
         controller: handphoneController,
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
             labelText: 'Handphone',
             enabledBorder: OutlineInputBorder(

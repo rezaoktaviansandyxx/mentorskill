@@ -23,9 +23,9 @@ class _LoginState extends State<Login> {
   //controller
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   //variabel
-  final _formKey = GlobalKey<FormState>();
   bool isHiddenPassword = true;
 
   void _togglePasswordView() {
