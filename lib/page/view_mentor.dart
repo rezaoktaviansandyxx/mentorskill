@@ -16,33 +16,33 @@ class ViewMentor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 0.35),
-        child: AppBar(
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/mentor1.jpeg"),
-                fit: BoxFit.cover,
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('mentor')
+            .where('id_major', isEqualTo: selectedMajor)
+            .snapshots(),
+        builder: (context, snapshot) {
+          QueryDocumentSnapshot? documentSnapshot =
+              snapshot.data?.docs[selectedMentor];
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          } else if (snapshot.hasData || snapshot.data != null) {
+            return Scaffold(
+              appBar: PreferredSize(
+                preferredSize:
+                    Size.fromHeight(MediaQuery.of(context).size.height * 0.35),
+                child: AppBar(
+                  flexibleSpace: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage((documentSnapshot!['foto'])),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('mentor')
-              .where('id_major', isEqualTo: selectedMajor)
-              .snapshots(),
-          builder: (context, snapshot) {
-            QueryDocumentSnapshot? documentSnapshot =
-                snapshot.data?.docs[selectedMentor];
-            if (snapshot.hasError) {
-              return Text('Something went wrong');
-            } else if (snapshot.hasData || snapshot.data != null) {
-              return Container(
+              body: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -157,8 +157,8 @@ class ViewMentor extends StatelessWidget {
                                             children: [
                                               Text(
                                                 (documentSnapshot != null
-                                              ? (documentSnapshot['slot'])
-                                              : ''),
+                                                    ? (documentSnapshot['slot'])
+                                                    : ''),
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
@@ -489,14 +489,14 @@ class ViewMentor extends StatelessWidget {
                     ),
                   ],
                 ),
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Colors.red),
               ),
             );
-          }),
-    );
+          }
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation(Colors.red),
+            ),
+          );
+        });
   }
 }

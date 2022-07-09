@@ -61,7 +61,6 @@ class _MentorDesc extends StatelessWidget {
     required this.reviews,
   }) : super(key: key);
 
-
   final String name;
   final String job;
   final String rate;

@@ -58,7 +58,7 @@ class _ChooseMentorState extends State<ChooseMentor> {
                         snapshot.data?.docs[index];
                     return Card(
                         child: CustomListItem(
-                      photo: Icon(Icons.person),
+                      photo: Image.network(documentSnapshot!['foto']),
                       name: documentSnapshot != null
                           ? (documentSnapshot['nama'])
                           : '',
