@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomListItem extends StatelessWidget {
   const CustomListItem({
@@ -52,17 +53,23 @@ class CustomListItem extends StatelessWidget {
 }
 
 class _MentorDesc extends StatelessWidget {
-  const _MentorDesc({
+  _MentorDesc({
     Key? key,
     required this.name,
     required this.job,
     required this.rate,
     required this.reviews,
   }) : super(key: key);
+
+
   final String name;
   final String job;
   final String rate;
   final String reviews;
+
+  //style
+  TextStyle style = TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0);
+  TextStyle style2 = TextStyle(fontSize: 14.0);
 
   @override
   Widget build(BuildContext context) {
@@ -73,15 +80,12 @@ class _MentorDesc extends StatelessWidget {
         children: [
           Text(
             name,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 15.0,
-            ),
+            style: GoogleFonts.poppins(textStyle: style),
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 5.0)),
           Text(
             job,
-            style: const TextStyle(fontSize: 13.0),
+            style: GoogleFonts.poppins(textStyle: style2),
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 5.0)),
           Row(
@@ -91,7 +95,7 @@ class _MentorDesc extends StatelessWidget {
                 children: [
                   Text(
                     rate,
-                    style: const TextStyle(fontSize: 13.0),
+                    style: GoogleFonts.poppins(textStyle: style2),
                   ),
                   Icon(
                     Icons.star,
@@ -103,7 +107,7 @@ class _MentorDesc extends StatelessWidget {
                 children: [
                   Text(
                     reviews,
-                    style: const TextStyle(fontSize: 13.0),
+                    style: GoogleFonts.poppins(textStyle: style2),
                   ),
                   Icon(
                     Icons.comment,

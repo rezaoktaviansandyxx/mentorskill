@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +21,24 @@ class _ChooseMajorsState extends State<ChooseMajors> {
   //variabel
   final _formKey = GlobalKey<FormState>();
   String majors = 'webDev';
+  //firebase
+  final _auth = FirebaseAuth.instance;
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   //option
   String skillDefault =
       'Skill 1 = Dapat membuat aplikasi front-end web yang responsif, memiliki aksesibilitas yang baik, mudah di-maintenance, memiliki sifat native, dapat diuji, dan memiliki performa yang baik.\n' +
@@ -40,22 +56,6 @@ class _ChooseMajorsState extends State<ChooseMajors> {
       'Skill 1 =  Harus menguasai prinsip-prinsip dalam desain seperti hierarchy, contrast, repetition, alignment, balance, dan lain-lain. Semua prinsip desain ini harus kamu kuasai dan gunakan untuk membuat desain yang menarik secara visual dan terstruktur dengan baik.\n' +
           'Skill 2 = Kemampuan komunikasi yang baik agar dapat sukses. Pasalnya, kamu perlu bekerja dengan berbagai klien dan tim dengan berbagai latar belakang pendidikan.\n' +
           'Skill 3 = Bisa belajar mandiri, berkomitmen, benar-benar punya rasa ingin tahu, dan tertarik pada subjek materi, karena sebaik apa pun materi kelas ini, tidak akan berguna tanpa keseriusan mahasiswa untuk belajar, berlatih, dan mencoba.\n';
-  //firebase
-  User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
-
-  @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +75,26 @@ class _ChooseMajorsState extends State<ChooseMajors> {
         ),
       ),
       child: Scaffold(
+        floatingActionButton: ElevatedButton(
+          onPressed: () {
+            addData();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChooseMentor(select: majors)));
+          },
+          child: Text(
+            'Selanjutnya',
+            style: GoogleFonts.poppins(textStyle: style),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.orange,
+            padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
@@ -157,27 +177,9 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                       ],
                     ),
                   ),
-                  Text(skillDefault,
-                      style: GoogleFonts.poppins(textStyle: style3)),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ChooseMentor(select: majors)));
-                    },
-                    child: Text(
-                      'Selanjutnya',
-                      style: GoogleFonts.poppins(textStyle: style),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.orange,
-                      padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                  Expanded(
+                    child: Text(skillDefault,
+                        style: GoogleFonts.poppins(textStyle: style3)),
                   ),
                 ],
               ),
@@ -186,5 +188,22 @@ class _ChooseMajorsState extends State<ChooseMajors> {
         ),
       ),
     );
+  }
+
+  addData() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
+    userModel.id_major = majors;
+    await firebaseFirestore
+        .collection('users')
+        .doc(user!.uid)
+        .update({'bidang': majors});
+    var snackBar = SnackBar(
+      duration: Duration(milliseconds: 700),
+      content: Text('Sukses Tersimpan'),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

@@ -39,6 +39,9 @@ dependencies:
   firebase_auth: ^3.4.1
   firebase_core: ^1.19.1
   cloud_firestore: ^3.2.1
+  url_launcher: ^6.1.4
+  intl: ^0.17.0
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +69,7 @@ flutter:
     - assets/images/logomentor.png
     - assets/images/mentoring.png
     - assets/images/mentoring2.png
+    - assets/images/mentor1.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
