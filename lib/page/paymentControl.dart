@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentorskill/controller/bottom_navi.dart';
-import 'package:mentorskill/page/payment.dart';
 
 class PaymentControl extends StatefulWidget {
   const PaymentControl({Key? key}) : super(key: key);
@@ -22,6 +20,7 @@ class _PaymentControlState extends State<PaymentControl> {
   //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,6 +39,10 @@ class _PaymentControlState extends State<PaymentControl> {
         ),
       ),
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+        ),
         backgroundColor: Colors.transparent,
         body: Container(
           margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
@@ -52,6 +55,16 @@ class _PaymentControlState extends State<PaymentControl> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      'Saldo anda tidak mencukupi\n' +
+                          'Anda harus mengisi saldo tersebut',
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(fontSize: 20)),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Text('Masukkan jumlah nominal yang ingin diisi',
                         style: GoogleFonts.poppins(textStyle: style2)),
                     SizedBox(
@@ -63,8 +76,6 @@ class _PaymentControlState extends State<PaymentControl> {
                 ElevatedButton(
                   onPressed: () {
                     addNominal();
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => Payment()));
                   },
                   child: Text(
                     'Isi Saldo',
@@ -73,25 +84,6 @@ class _PaymentControlState extends State<PaymentControl> {
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange,
                     padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => BottomNavi()),
-                        (route) => false);
-                  },
-                  child: Text(
-                    'Bayar',
-                    style: GoogleFonts.poppins(textStyle: style),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.orange,
-                    padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -107,13 +99,6 @@ class _PaymentControlState extends State<PaymentControl> {
 
   TextFormField nominalText() => TextFormField(
         controller: nominalController,
-        //     validator: (value) {
-        //       if (value!.isEmpty) {
-        //         return "Masukkan Email";
-        //       } else {
-        //         return null;
-        //       }
-        //     },
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
             labelText: 'Nominal',
@@ -131,25 +116,39 @@ class _PaymentControlState extends State<PaymentControl> {
     try {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       User? user = _auth.currentUser;
-      await firebaseFirestore
-          .collection('users')
-          .doc(user!.uid)
-          .update({'saldo': int.parse(nominalController.text.toString())});
-      var snackBar = SnackBar(
-        duration: Duration(milliseconds: 700),
-        content:
-            Text('Pengisian saldo sebesar ${nominalController.text} berhasil'),
-        backgroundColor: Colors.green,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      await firebaseFirestore.collection('users').doc(user!.uid).update({
+        'saldo':
+            FieldValue.increment(int.parse(nominalController.text.toString()))
+      });
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text('Pengisian saldo Berhasil'),
+                content: Text(
+                    'Pengisian saldo anda sebesar ${nominalController.text} telah berhasil ditambahkan'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                      child: Text('OK'))
+                ],
+              ));
+      // var snackBar = SnackBar(
+      //   duration: Duration(milliseconds: 1500),
+      //   content: Text('Pengisian saldo ${nominalController.text} berhasil'),
+      //   backgroundColor: Colors.green,
+      // );
+      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // Navigator.pop(context);
     } catch (e) {
       var snackBar = SnackBar(
-        duration: Duration(milliseconds: 700),
-        content: Text('Error'),
+        duration: Duration(milliseconds: 1500),
+        content:
+            Text('Pengisian saldo ${nominalController.text} tidak berhasil'),
         backgroundColor: Colors.red,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      print(e);
     }
   }
 }

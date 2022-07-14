@@ -32,8 +32,7 @@ class _EditProfileState extends State<EditProfile> {
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-
-  @override
+  
   @override
   void initState() {
     super.initState();
@@ -327,7 +326,7 @@ class _EditProfileState extends State<EditProfile> {
           .update({
         'nama': fullNameController.text,
         'tglLahir': birthdayController.text,
-        'phone': handphoneController.text,
+        'phone': int.parse(handphoneController.text.toString()),
         'jkel': jkel,
       });
       var snackBar = SnackBar(

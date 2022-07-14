@@ -6,6 +6,7 @@ class UserModel {
   String? nama;
   String? phone;
   String? tglLahir;
+  int? saldo;
 
   UserModel(
       {this.uid,
@@ -14,7 +15,8 @@ class UserModel {
       this.jkel,
       this.nama,
       this.phone,
-      this.tglLahir});
+      this.tglLahir,
+      this.saldo});
 
   // reciving data from server
   factory UserModel.fromMap(map) {
@@ -26,6 +28,7 @@ class UserModel {
       nama: map['nama'],
       phone: map['phone'],
       tglLahir: map['tglLahir'],
+      saldo: map['saldo'],
     );
   }
   Map<String, dynamic> toMap() {
@@ -37,6 +40,7 @@ class UserModel {
       'nama': nama,
       'phone': phone,
       'tglLahir': tglLahir,
+      'saldo' : saldo
     };
   }
 }

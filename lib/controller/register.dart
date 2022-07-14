@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/controller/login.dart';
 import 'package:mentorskill/model/user_model.dart';
+import 'package:mentorskill/page/choose_majors.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -257,6 +256,6 @@ class _RegisterState extends State<Register> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
     Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => Login()), (route) => false);
+        MaterialPageRoute(builder: (context) => ChooseMajors()), (route) => false);
   }
 }

@@ -50,7 +50,7 @@ class _BottomNaviState extends State<BottomNavi> {
                 Icons.account_circle_rounded,
                 color: Colors.green,
               ),
-              label: 'Beranda',
+              label: 'Akun Saya',
               activeIcon: Icon(
                 Icons.account_circle_outlined,
                 color: Colors.blue,

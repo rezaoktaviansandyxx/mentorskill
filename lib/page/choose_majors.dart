@@ -15,7 +15,7 @@ class ChooseMajors extends StatefulWidget {
 class _ChooseMajorsState extends State<ChooseMajors> {
   //style
   TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
-  TextStyle style2 = TextStyle(fontSize: 45);
+  TextStyle style2 = TextStyle(fontSize: 22);
   TextStyle style3 = TextStyle(fontSize: 15);
   TextStyle style4 = TextStyle(fontSize: 17);
   //variabel
@@ -75,30 +75,31 @@ class _ChooseMajorsState extends State<ChooseMajors> {
         ),
       ),
       child: Scaffold(
-        floatingActionButton: ElevatedButton(
-          onPressed: () {
-            addData();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ChooseMentor(select: majors)));
-          },
-          child: Text(
-            'Selanjutnya',
-            style: GoogleFonts.poppins(textStyle: style),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.orange,
-            padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+        floatingActionButton: 
+            ElevatedButton(
+              onPressed: () {
+                addData();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChooseMentor(select: majors)));
+              },
+              child: Text(
+                'Selanjutnya',
+                style: GoogleFonts.poppins(textStyle: style),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.orange,
+                padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
             ),
-          ),
-        ),
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+            margin: EdgeInsets.fromLTRB(10, 30, 10, 0),
             height: MediaQuery.of(context).size.height,
             child: Form(
               key: _formKey,
@@ -111,9 +112,12 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                       'Halo ${loggedInUser.nama}',
                       style: GoogleFonts.poppins(textStyle: style2),
                     ),
-                  ), // harus bisa get nama dari firebase
+                  ),
                   Text('Tentukan bidang apa yang kamu minati!',
                       style: GoogleFonts.poppins(textStyle: style4)),
+                  SizedBox(
+                    height: 30,
+                  ),
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     decoration: BoxDecoration(
@@ -177,6 +181,9 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                  ),
                   Expanded(
                     child: Text(skillDefault,
                         style: GoogleFonts.poppins(textStyle: style3)),
@@ -199,11 +206,11 @@ class _ChooseMajorsState extends State<ChooseMajors> {
         .collection('users')
         .doc(user!.uid)
         .update({'bidang': majors});
-    var snackBar = SnackBar(
-      duration: Duration(milliseconds: 700),
-      content: Text('Sukses Tersimpan'),
-      backgroundColor: Colors.green,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // var snackBar = SnackBar(
+    //   duration: Duration(milliseconds: 700),
+    //   content: Text('Sukses Tersimpan'),
+    //   backgroundColor: Colors.green,
+    // );
+    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

@@ -1,10 +1,10 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/model/user_model.dart';
+import 'package:mentorskill/page/class_menu.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Dashboard extends StatefulWidget {
@@ -35,27 +35,6 @@ class _DashboardState extends State<Dashboard> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
-  }
-
-  void launchWhatsApp({
-    required int phone,
-    required String message,
-  }) async {
-    String url() {
-      if (Platform.isAndroid) {
-        // add the [https]
-        return "https://wa.me/$phone/?text=${Uri.parse(message)}"; // new line
-      } else {
-        // add the [https]
-        return "https://api.whatsapp.com/send?phone=$phone=${Uri.parse(message)}"; // new line
-      }
-    }
-
-    if (await canLaunchUrlString(url())) {
-      await launchUrlString(url());
-    } else {
-      throw 'Could not launch ${url()}';
-    }
   }
 
   @override
@@ -144,8 +123,7 @@ class _DashboardState extends State<Dashboard> {
                             size: 40,
                           ),
                           onPressed: () {
-                            launchWhatsApp(
-                                phone: 6289520603456, message: 'halo');
+                            whatsAppOpen();
                           },
                         ),
                       ],
@@ -167,7 +145,10 @@ class _DashboardState extends State<Dashboard> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => ClassMenu()));
+                    },
                     icon: Icon(
                       Icons.arrow_forward_rounded,
                       size: 40,
@@ -183,5 +164,14 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
     );
+  }
+
+  void whatsAppOpen() async {
+    var phone = "+6289520603456";
+    var whatsappUrl = "whatsapp://send?phone=$phone";
+    await canLaunchUrlString(whatsappUrl)
+        ? launchUrlString(whatsappUrl)
+        : print(
+            "open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
   }
 }
