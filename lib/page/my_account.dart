@@ -137,23 +137,6 @@ class _MyAccountState extends State<MyAccount> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Email',
-                        style: GoogleFonts.poppins(textStyle: style4),
-                      ),
-                      Text(
-                        '${loggedInUser.email}',
-                        style: GoogleFonts.poppins(textStyle: style4),
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    thickness: 2,
-                    color: Colors.grey,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
                         'Nama Lengkap',
                         style: GoogleFonts.poppins(textStyle: style4),
                       ),

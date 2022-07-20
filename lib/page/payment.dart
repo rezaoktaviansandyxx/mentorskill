@@ -7,9 +7,9 @@ import 'package:mentorskill/model/user_model.dart';
 import 'package:mentorskill/page/paymentControl.dart';
 
 class Payment extends StatefulWidget {
-  Payment({Key? key, required this.selectPayment, required this.selectedMentor})
+  const Payment({Key? key, this.selectPayment, required this.selectedMentor})
       : super(key: key);
-  final String selectPayment;
+  final String? selectPayment;
   final int selectedMentor;
 
   @override
@@ -24,11 +24,7 @@ class _PaymentState extends State<Payment> {
 
   TextStyle style3 = TextStyle(fontSize: 20);
 
-  //controller
-  TextEditingController nominalController = TextEditingController();
-
   //firebase
-  final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
@@ -41,10 +37,11 @@ class _PaymentState extends State<Payment> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
+      setState(() {
+        // var saldo = "${loggedInUser.saldo}";
+      });
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,70 +76,34 @@ class _PaymentState extends State<Payment> {
             // stream: getData(),
             // stream: CombineLatestStream.list([stream1, stream2]),
             builder: (context, snapshot) {
-          QueryDocumentSnapshot? documentSnapshot =
-              snapshot.data?.docs[widget.selectedMentor];
+              QueryDocumentSnapshot? documentSnapshot =
+                  snapshot.data?.docs[widget.selectedMentor];
 
-          // final dataMentor = snapshot.data?.docs[selectedMentor];
-          // try {
-          //   dynamic nested = documentSnapshot!.get('saldo');
-          // } on StateError catch (e) {
-          //   print(e);
-          // }
-          // print();
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          } else if (snapshot.hasData || snapshot.data != null) {
-            return Container(
-              margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Pembayaran',
-                    style: GoogleFonts.poppins(textStyle: style2),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // final dataMentor = snapshot.data?.docs[selectedMentor];
+              // try {
+              //   dynamic nested = documentSnapshot!.get('saldo');
+              // } on StateError catch (e) {
+              //   print(e);
+              // }
+              // print();
+              if (snapshot.hasError) {
+                return Text('Something went wrong');
+              } else if (snapshot.hasData || snapshot.data != null) {
+                return Container(
+                  margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        'Paket Skill 1',
-                        style: GoogleFonts.poppins(textStyle: style3),
-                      ),
-                      Text(
-                        (documentSnapshot != null
-                            ? (documentSnapshot['harga'])
-                            : ''),
-                        style: GoogleFonts.poppins(textStyle: style3),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Saldo anda',
-                            style: GoogleFonts.poppins(textStyle: style3),
-                          ),
-                          Text(
-                            // documentSnapshot!.data().toString().contains('')
-                            //     ? documentSnapshot.get('')
-                            //     : "0",
-                            "${loggedInUser.saldo}",
-                            style: GoogleFonts.poppins(textStyle: style3),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30,
+                        'Pembayaran',
+                        style: GoogleFonts.poppins(textStyle: style2),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total Pembayaran',
+                            'Paket Skill 1',
                             style: GoogleFonts.poppins(textStyle: style3),
                           ),
                           Text(
@@ -153,154 +114,235 @@ class _PaymentState extends State<Payment> {
                           ),
                         ],
                       ),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Saldo anda',
+                                style: GoogleFonts.poppins(textStyle: style3),
+                              ),
+                              Text(
+                                // documentSnapshot!.data().toString().contains('')
+                                //     ? documentSnapshot.get('')
+                                //     : "0",
+                                "${loggedInUser.saldo}",
+                                style: GoogleFonts.poppins(textStyle: style3),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total Pembayaran',
+                                style: GoogleFonts.poppins(textStyle: style3),
+                              ),
+                              Text(
+                                (documentSnapshot != null
+                                    ? (documentSnapshot['harga'])
+                                    : ''),
+                                style: GoogleFonts.poppins(textStyle: style3),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PaymentControl(
+                                        selectedMentor: widget.selectedMentor)),
+                              ).then((value) => setState(() {}));
+                            },
+                            child: Text(
+                              'Isi Saldo',
+                              style: GoogleFonts.poppins(textStyle: style),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.orange,
+                              padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (int.parse('${loggedInUser.saldo}') <=
+                                  int.parse(documentSnapshot!['harga'])) {
+                                // var snackBar = SnackBar(
+                                //   duration: Duration(milliseconds: 1500),
+                                //   content: Text(
+                                //       'Saldo anda tidak cukup'),
+                                //   backgroundColor: Colors.red,
+                                // );
+                                // ScaffoldMessenger.of(context)
+                                //     .showSnackBar(snackBar);
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Pembayaran Ditolak'),
+                                    content: const Text(
+                                        'Maaf, saldo anda tidak cukup, silahkan isi uang saldo anda terlebih dahulu'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('OK')),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Pembayaran Berhasil'),
+                                    content: const Text(
+                                        'Selamat, Anda berhasil melakukan pembayaran, anda sekarang memiliki mentor'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        BottomNavi()),
+                                                (route) => false);
+                                          },
+                                          child: const Text('OK')),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text(
+                              'Bayar',
+                              style: GoogleFonts.poppins(textStyle: style),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.orange,
+                              padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     showDialog(
+                      //       context: context,
+                      //       builder: (context) => AlertDialog(
+                      //         title: Text(
+                      //             'Masukkan jumlah nominal yang ingin diisi',
+                      //             style: GoogleFonts.poppins(
+                      //                 textStyle: TextStyle(
+                      //                     fontSize: 15,
+                      //                     color: Colors.black))),
+                      //         content: TextFormField(
+                      //           controller: nominalController,
+                      //           keyboardType: TextInputType.number,
+                      //           decoration: InputDecoration(
+                      //               labelText: 'Nominal',
+                      //               enabledBorder: OutlineInputBorder(
+                      //                 borderSide: const BorderSide(
+                      //                     width: 3, color: Colors.blue),
+                      //                 borderRadius: BorderRadius.circular(15),
+                      //               ),
+                      //               focusedBorder: OutlineInputBorder(
+                      //                 borderSide: const BorderSide(
+                      //                     width: 3, color: Colors.blue),
+                      //                 borderRadius: BorderRadius.circular(15),
+                      //               )),
+                      //         ),
+                      //         actions: [
+                      //           TextButton(
+                      //               onPressed: () {
+                      //                 Navigator.pop(context);
+                      //               },
+                      //               child: Text('Batal')),
+                      //           TextButton(
+                      //               onPressed: () async {
+                      //                 // addNominal();
+                      //                 try {
+                      //                   FirebaseFirestore firebaseFirestore =
+                      //                       FirebaseFirestore.instance;
+                      //                   User? user = _auth.currentUser;
+                      //                   await firebaseFirestore
+                      //                       .collection('users')
+                      //                       .doc(user!.uid)
+                      //                       .update({
+                      //                     'saldo': int.parse(nominalController
+                      //                         .text
+                      //                         .toString())
+                      //                   });
+                      //                   var snackBar = SnackBar(
+                      //                     duration:
+                      //                         Duration(milliseconds: 1000),
+                      //                     content: Text(
+                      //                         'Pengisian saldo ${nominalController.text} berhasil'),
+                      //                     backgroundColor: Colors.green,
+                      //                   );
+                      //                   ScaffoldMessenger.of(context)
+                      //                       .showSnackBar(snackBar);
+                      //                   await Navigator.push(
+                      //                       context,
+                      //                       MaterialPageRoute(
+                      //                           builder: (context) =>
+                      //                               BottomNavi()));
+                      //                 } catch (e) {
+                      //                   var snackBar = SnackBar(
+                      //                     duration:
+                      //                         Duration(milliseconds: 1000),
+                      //                     content: Text(
+                      //                         'Pengisian saldo ${nominalController.text} tidak berhasil'),
+                      //                     backgroundColor: Colors.red,
+                      //                   );
+                      //                   ScaffoldMessenger.of(context)
+                      //                       .showSnackBar(snackBar);
+                      //                 }
+                      //               },
+                      //               child: Text('OK')),
+                      //         ],
+                      //       ),
+                      //     );
+                      //   },
+                      //   child: Text(
+                      //     'Bayar',
+                      //     style: GoogleFonts.poppins(textStyle: style),
+                      //   ),
+                      //   style: ElevatedButton.styleFrom(
+                      //     primary: Colors.orange,
+                      //     padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PaymentControl()));
-                        },
-                        child: Text(
-                          'Isi Saldo',
-                          style: GoogleFonts.poppins(textStyle: style),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.orange,
-                          padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BottomNavi()));
-                        },
-                        child: Text(
-                          'Bayar',
-                          style: GoogleFonts.poppins(textStyle: style),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.orange,
-                          padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     showDialog(
-                  //       context: context,
-                  //       builder: (context) => AlertDialog(
-                  //         title: Text(
-                  //             'Masukkan jumlah nominal yang ingin diisi',
-                  //             style: GoogleFonts.poppins(
-                  //                 textStyle: TextStyle(
-                  //                     fontSize: 15,
-                  //                     color: Colors.black))),
-                  //         content: TextFormField(
-                  //           controller: nominalController,
-                  //           keyboardType: TextInputType.number,
-                  //           decoration: InputDecoration(
-                  //               labelText: 'Nominal',
-                  //               enabledBorder: OutlineInputBorder(
-                  //                 borderSide: const BorderSide(
-                  //                     width: 3, color: Colors.blue),
-                  //                 borderRadius: BorderRadius.circular(15),
-                  //               ),
-                  //               focusedBorder: OutlineInputBorder(
-                  //                 borderSide: const BorderSide(
-                  //                     width: 3, color: Colors.blue),
-                  //                 borderRadius: BorderRadius.circular(15),
-                  //               )),
-                  //         ),
-                  //         actions: [
-                  //           TextButton(
-                  //               onPressed: () {
-                  //                 Navigator.pop(context);
-                  //               },
-                  //               child: Text('Batal')),
-                  //           TextButton(
-                  //               onPressed: () async {
-                  //                 // addNominal();
-                  //                 try {
-                  //                   FirebaseFirestore firebaseFirestore =
-                  //                       FirebaseFirestore.instance;
-                  //                   User? user = _auth.currentUser;
-                  //                   await firebaseFirestore
-                  //                       .collection('users')
-                  //                       .doc(user!.uid)
-                  //                       .update({
-                  //                     'saldo': int.parse(nominalController
-                  //                         .text
-                  //                         .toString())
-                  //                   });
-                  //                   var snackBar = SnackBar(
-                  //                     duration:
-                  //                         Duration(milliseconds: 1000),
-                  //                     content: Text(
-                  //                         'Pengisian saldo ${nominalController.text} berhasil'),
-                  //                     backgroundColor: Colors.green,
-                  //                   );
-                  //                   ScaffoldMessenger.of(context)
-                  //                       .showSnackBar(snackBar);
-                  //                   await Navigator.push(
-                  //                       context,
-                  //                       MaterialPageRoute(
-                  //                           builder: (context) =>
-                  //                               BottomNavi()));
-                  //                 } catch (e) {
-                  //                   var snackBar = SnackBar(
-                  //                     duration:
-                  //                         Duration(milliseconds: 1000),
-                  //                     content: Text(
-                  //                         'Pengisian saldo ${nominalController.text} tidak berhasil'),
-                  //                     backgroundColor: Colors.red,
-                  //                   );
-                  //                   ScaffoldMessenger.of(context)
-                  //                       .showSnackBar(snackBar);
-                  //                 }
-                  //               },
-                  //               child: Text('OK')),
-                  //         ],
-                  //       ),
-                  //     );
-                  //   },
-                  //   child: Text(
-                  //     'Bayar',
-                  //     style: GoogleFonts.poppins(textStyle: style),
-                  //   ),
-                  //   style: ElevatedButton.styleFrom(
-                  //     primary: Colors.orange,
-                  //     padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(Colors.red),
-            ),
-          );
-        }),
+                );
+              }
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Colors.red),
+                ),
+              );
+            }),
       ),
     );
   }

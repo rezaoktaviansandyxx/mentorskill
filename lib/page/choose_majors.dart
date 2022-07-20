@@ -205,7 +205,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
     await firebaseFirestore
         .collection('users')
         .doc(user!.uid)
-        .update({'bidang': majors});
+        .update({'id_major': majors});
     // var snackBar = SnackBar(
     //   duration: Duration(milliseconds: 700),
     //   content: Text('Sukses Tersimpan'),

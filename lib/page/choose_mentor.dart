@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/component/custom_list_item.dart';
+import 'package:mentorskill/model/user_model.dart';
 import 'package:mentorskill/page/payment.dart';
 import 'package:mentorskill/page/view_mentor.dart';
 
@@ -21,19 +23,14 @@ class _ChooseMentorState extends State<ChooseMentor> {
   TextStyle style3 = TextStyle(fontSize: 20, color: Colors.white);
   //variabel
   int selectedMentor = 0;
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       floatingActionButton: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Payment(
-                        selectedMentor: selectedMentor,
-                        selectPayment: widget.select,
-                      )));
+          updateData();
         },
         child: Text(
           'Bayar',
@@ -84,7 +81,7 @@ class _ChooseMentorState extends State<ChooseMentor> {
                           setState(() {
                             selectedMentor = value!.toInt();
                           });
-                          print(value);
+                          // print(value);
                         },
                       ),
                       view: RichText(
@@ -122,5 +119,23 @@ class _ChooseMentorState extends State<ChooseMentor> {
             );
           }),
     );
+  }
+
+  updateData() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
+    userModel.id_mentor = selectedMentor;
+    await firebaseFirestore
+        .collection('users')
+        .doc(user!.uid)
+        .update({'id_mentor': selectedMentor});
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Payment(
+                  selectedMentor: selectedMentor,
+                  selectPayment: widget.select,
+                )));
   }
 }

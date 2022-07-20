@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mentorskill/model/user_model.dart';
+import 'package:mentorskill/page/payment.dart';
 
 class PaymentControl extends StatefulWidget {
-  const PaymentControl({Key? key}) : super(key: key);
+  const PaymentControl({Key? key, required this.selectedMentor}) : super(key: key);
+  final int selectedMentor;
 
   @override
   State<PaymentControl> createState() => _PaymentControlState();
@@ -17,9 +20,26 @@ class _PaymentControlState extends State<PaymentControl> {
   //style
   TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
   TextStyle style2 = TextStyle(fontSize: 15, color: Colors.black);
+  TextStyle style3 = TextStyle(fontSize: 20);
   //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {
+        // var saldo = "${loggedInUser.saldo}";
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +78,7 @@ class _PaymentControlState extends State<PaymentControl> {
                     Text(
                       'Saldo anda tidak mencukupi\n' +
                           'Anda harus mengisi saldo tersebut',
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(fontSize: 20)),
+                      style: GoogleFonts.poppins(textStyle: style3),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(
@@ -71,6 +90,13 @@ class _PaymentControlState extends State<PaymentControl> {
                       height: 15,
                     ),
                     nominalText(),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    // Align(
+                    //     alignment: Alignment.center,
+                    //     child: Text('Saldo Anda sekarang ${loggedInUser.saldo}',
+                    //         style: GoogleFonts.poppins(textStyle: style3))),
                   ],
                 ),
                 ElevatedButton(
@@ -123,13 +149,16 @@ class _PaymentControlState extends State<PaymentControl> {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: const Text('Pengisian saldo Berhasil'),
+                title: const Text('Pengisian Saldo Berhasil'),
                 content: Text(
                     'Pengisian saldo anda sebesar ${nominalController.text} telah berhasil ditambahkan'),
                 actions: [
                   TextButton(
                       onPressed: () {
-                        Navigator.pop(context, true);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Payment(selectedMentor: widget.selectedMentor)));
                       },
                       child: Text('OK'))
                 ],
@@ -145,7 +174,7 @@ class _PaymentControlState extends State<PaymentControl> {
       var snackBar = SnackBar(
         duration: Duration(milliseconds: 1500),
         content:
-            Text('Pengisian saldo ${nominalController.text} tidak berhasil'),
+            Text('Pengisian saldo anda sebesar ${nominalController.text} tidak berhasil'),
         backgroundColor: Colors.red,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
