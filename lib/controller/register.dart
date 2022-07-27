@@ -238,7 +238,7 @@ class _RegisterState extends State<Register> {
     //sending these value
     final firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-    UserModel userModel = UserModel();
+    UserModel userModel = UserModel(saldo: 0);
 
     //writing all the value
     userModel.email = user!.email;

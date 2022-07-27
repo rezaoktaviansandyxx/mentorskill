@@ -26,7 +26,7 @@ class _MyAccountState extends State<MyAccount> {
 //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = UserModel(saldo: 0);
 
   @override
   void initState() {

@@ -7,7 +7,7 @@ class UserModel {
   String? nama;
   String? phone;
   String? tglLahir;
-  int? saldo;
+  int saldo = 0;
 
   UserModel(
       {this.uid,
@@ -18,7 +18,7 @@ class UserModel {
       this.nama,
       this.phone,
       this.tglLahir,
-      this.saldo});
+      required this.saldo});
 
   // reciving data from server
   factory UserModel.fromMap(map) {

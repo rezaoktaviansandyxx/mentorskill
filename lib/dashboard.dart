@@ -22,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
   //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = UserModel(saldo: 0);
 
   @override
   void initState() {

@@ -24,7 +24,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
   //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = UserModel(saldo: 0);
 
   @override
   void initState() {
@@ -200,7 +200,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
   addData() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-    UserModel userModel = UserModel();
+    UserModel userModel = UserModel(saldo: 0);
     userModel.id_major = majors;
     await firebaseFirestore
         .collection('users')

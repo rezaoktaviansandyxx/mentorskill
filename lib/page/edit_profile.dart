@@ -31,7 +31,7 @@ class _EditProfileState extends State<EditProfile> {
   //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = UserModel(saldo: 0);
   
   @override
   void initState() {
@@ -313,7 +313,7 @@ class _EditProfileState extends State<EditProfile> {
     try {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       User? user = _auth.currentUser;
-      UserModel userModel = UserModel();
+      UserModel userModel = UserModel(saldo: 0);
 
       //Writing data
       userModel.phone = handphoneController.text;

@@ -25,7 +25,7 @@ class _PaymentControlState extends State<PaymentControl> {
   //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = UserModel(saldo: 0);
 
   @override
   void initState() {

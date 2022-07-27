@@ -81,7 +81,7 @@ class _ChooseMentorState extends State<ChooseMentor> {
                           setState(() {
                             selectedMentor = value!.toInt();
                           });
-                          // print(value);
+                          print(value);
                         },
                       ),
                       view: RichText(
@@ -124,7 +124,7 @@ class _ChooseMentorState extends State<ChooseMentor> {
   updateData() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-    UserModel userModel = UserModel();
+    UserModel userModel = UserModel(saldo: 0);
     userModel.id_mentor = selectedMentor;
     await firebaseFirestore
         .collection('users')

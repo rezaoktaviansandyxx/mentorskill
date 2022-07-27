@@ -25,7 +25,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = UserModel(saldo: 0);
 
   void _togglePasswordView() {
     setState(() {
