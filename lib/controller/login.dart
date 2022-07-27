@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/controller/bottom_navi.dart';
 import 'package:mentorskill/controller/register.dart';
-import 'package:mentorskill/page/choose_majors.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -33,6 +32,13 @@ class _LoginState extends State<Login> {
     setState(() {
       isHiddenPassword = !isHiddenPassword;
     });
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
   }
 
   @override
@@ -137,7 +143,7 @@ class _LoginState extends State<Login> {
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }).catchError((e) {
         var errorSnackbar = SnackBar(
-          content: Text('Email/Password Salah'),
+          content: Text('Email/Kata Sandi Salah'),
           duration: Duration(milliseconds: 700),
           backgroundColor: Colors.red,
         );
@@ -150,14 +156,14 @@ class _LoginState extends State<Login> {
         controller: passController,
         validator: (value) {
           if (value!.isEmpty) {
-            return "Masukkan Password";
+            return "Masukkan Kata Sandi";
           } else {
             return null;
           }
         },
         obscureText: isHiddenPassword,
         decoration: InputDecoration(
-          labelText: 'Password',
+          labelText: 'Kata Sandi',
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: 3, color: Colors.blue),
             borderRadius: BorderRadius.circular(15),

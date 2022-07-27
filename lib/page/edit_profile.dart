@@ -326,7 +326,7 @@ class _EditProfileState extends State<EditProfile> {
           .update({
         'nama': fullNameController.text,
         'tglLahir': birthdayController.text,
-        'phone': int.parse(handphoneController.text.toString()),
+        'phone': handphoneController.text,
         'jkel': jkel,
       });
       var snackBar = SnackBar(

@@ -190,7 +190,7 @@ class _RegisterState extends State<Register> {
         controller: cPassController,
         validator: (value) {
           if (value!.isEmpty) {
-            return "Masukkan Password";
+            return "Masukkan Konfirmasi Password";
           } else if (value != passController.text) {
             return 'Tidak Sama';
           }
@@ -250,7 +250,8 @@ class _RegisterState extends State<Register> {
         .doc(user.uid)
         .set(userModel.toMap());
     var snackBar = SnackBar(
-      content: Text('Akun Berhasil di Buat'),
+      content: Text('Akun Berhasil dibuat'),
+      duration: Duration(milliseconds: 700),
       backgroundColor: Colors.green,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);

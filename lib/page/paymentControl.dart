@@ -6,7 +6,8 @@ import 'package:mentorskill/model/user_model.dart';
 import 'package:mentorskill/page/payment.dart';
 
 class PaymentControl extends StatefulWidget {
-  const PaymentControl({Key? key, required this.selectedMentor}) : super(key: key);
+  const PaymentControl({Key? key, required this.selectedMentor})
+      : super(key: key);
   final int selectedMentor;
 
   @override
@@ -158,7 +159,8 @@ class _PaymentControlState extends State<PaymentControl> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Payment(selectedMentor: widget.selectedMentor)));
+                                builder: (context) => Payment(
+                                    selectedMentor: widget.selectedMentor)));
                       },
                       child: Text('OK'))
                 ],
@@ -171,13 +173,27 @@ class _PaymentControlState extends State<PaymentControl> {
       // ScaffoldMessenger.of(context).showSnackBar(snackBar);
       // Navigator.pop(context);
     } catch (e) {
-      var snackBar = SnackBar(
-        duration: Duration(milliseconds: 1500),
-        content:
-            Text('Pengisian saldo anda sebesar ${nominalController.text} tidak berhasil'),
-        backgroundColor: Colors.red,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text('Pengisian Saldo Ditolak'),
+                content: Text(
+                    'Pengisian saldo anda sebesar ${nominalController.text} tidak berhasil'),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'))
+                ],
+              ));
+      // var snackBar = SnackBar(
+      // duration: Duration(milliseconds: 1500),
+      //   content:
+      //       Text('Pengisian saldo anda sebesar ${nominalController.text} tidak berhasil'),
+      //   backgroundColor: Colors.red,
+      // );
+      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 }

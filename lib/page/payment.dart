@@ -211,10 +211,18 @@ class _PaymentState extends State<Payment> {
                                   builder: (context) => AlertDialog(
                                     title: const Text('Pembayaran Berhasil'),
                                     content: const Text(
-                                        'Selamat, Anda berhasil melakukan pembayaran, anda sekarang memiliki mentor'),
+                                        'Selamat, anda berhasil melakukan pembayaran, anda sekarang memiliki mentor'),
                                     actions: [
                                       TextButton(
                                           onPressed: () {
+                                            FirebaseFirestore.instance
+                                                .collection('users')
+                                                .doc(user!.uid)
+                                                .update({
+                                              'saldo': int.parse(
+                                                      '${loggedInUser.saldo}')-int.parse(
+                                                  documentSnapshot['harga'])
+                                            });
                                             Navigator.pushAndRemoveUntil(
                                                 context,
                                                 MaterialPageRoute(

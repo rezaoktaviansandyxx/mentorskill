@@ -97,7 +97,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         controller: repeatPasswordController,
         validator: (value) {
           if (value!.isEmpty) {
-            return "Masukkan Password";
+            return "Masukkan Konfirmasi Kata Sandi Baru";
           } else if (value != newPasswordController.text) {
             return 'Tidak Sama';
           }
@@ -105,7 +105,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         },
         obscureText: isHiddenPassword,
         decoration: InputDecoration(
-          labelText: 'Konfirmasi Password',
+          labelText: 'Konfirmasi Kata Sandi Baru',
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: 3, color: Colors.blue),
             borderRadius: BorderRadius.circular(15),
@@ -198,7 +198,7 @@ class _ChangePasswordState extends State<ChangePassword> {
 
         user.updatePassword(newPassword).then((_) async {
           var snackBar = SnackBar(
-            content: Text('Berhasil Mengganti Password'),
+            content: Text('Berhasil Mengganti Kata Sandi'),
             duration: Duration(milliseconds: 700),
             backgroundColor: Colors.green,
           );
