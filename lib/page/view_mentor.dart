@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mentorskill/model/user_model.dart';
+import 'package:mentorskill/page/payment.dart';
 
 class ViewMentor extends StatelessWidget {
-  const ViewMentor(
+  ViewMentor(
       {Key? key, required this.selectedMajor, required this.selectedMentor})
       : super(key: key);
   //Style
@@ -13,9 +16,12 @@ class ViewMentor extends StatelessWidget {
 
   final String selectedMajor;
   final int selectedMentor;
+  String documentId = '';
 
   @override
   Widget build(BuildContext context) {
+    TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
+
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('mentor')
@@ -24,6 +30,7 @@ class ViewMentor extends StatelessWidget {
         builder: (context, snapshot) {
           QueryDocumentSnapshot? documentSnapshot =
               snapshot.data?.docs[selectedMentor];
+          documentId = documentSnapshot!.get('id_mentor');
           if (snapshot.hasError) {
             return Text('Something went wrong');
           } else if (snapshot.hasData || snapshot.data != null) {
@@ -35,7 +42,7 @@ class ViewMentor extends StatelessWidget {
                   flexibleSpace: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage((documentSnapshot!['foto'])),
+                        image: NetworkImage((documentSnapshot['foto'])),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -482,7 +489,31 @@ class ViewMentor extends StatelessWidget {
                                             borderRadius: BorderRadius.all(
                                                 const Radius.elliptical(8, 8)),
                                           ))),
-                                ]))
+                                ])),
+                            // Text('hehe')
+                            ElevatedButton(
+                              onPressed: () {
+                                // print('hehe');
+                                updateData();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Payment(
+                                            selectedMentor: selectedMentor)));
+                              },
+                              child: Text(
+                                'Jadikan mentor saya',
+                                style: GoogleFonts.poppins(textStyle: style),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.orange,
+                                // padding: EdgeInsets.fromLTRB(left, top, right, bottom),
+                                padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -498,5 +529,25 @@ class ViewMentor extends StatelessWidget {
             ),
           );
         });
+  }
+
+  updateData() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+    UserModel userModel = UserModel(saldo: 0);
+
+    // firebaseFirestore.collection('mentor').where(index).snapshots();
+    // QueryDocumentSnapshot? documentSnapshot =
+    //     snapshot.data?.docs[selectedMentor].get('id');
+    // FirebaseFirestore.instance
+    //         .collection('mentor')
+    //         .where('id_major', isEqualTo: selectedMajor)
+    //         // .where('id_mentor', isEqualTo: selectedMentor)
+    //         .snapshots(),
+    userModel.id_mentor = documentId;
+    await firebaseFirestore
+        .collection('users')
+        .doc(user!.uid)
+        .update({'id_mentor': documentId});
   }
 }

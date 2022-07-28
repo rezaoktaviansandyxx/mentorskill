@@ -2,7 +2,7 @@ class UserModel {
   String? uid;
   String? email;
   String? id_major;
-  int? id_mentor;
+  String? id_mentor;
   String? jkel;
   String? nama;
   String? phone;
@@ -44,7 +44,7 @@ class UserModel {
       'nama': nama,
       'phone': phone,
       'tglLahir': tglLahir,
-      'saldo' : saldo
+      'saldo': saldo
     };
   }
 }

@@ -9,8 +9,6 @@ class CustomListItem extends StatelessWidget {
     required this.job,
     required this.rate,
     required this.reviews,
-    required this.radioBut,
-    required this.view,
   }) : super(key: key);
 
   final Widget photo;
@@ -18,8 +16,6 @@ class CustomListItem extends StatelessWidget {
   final String job;
   final String rate;
   final String reviews;
-  final Radio<int> radioBut;
-  final RichText view;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +24,7 @@ class CustomListItem extends StatelessWidget {
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Expanded(
           child: photo,
-          flex: 2,
+          flex: 1,
         ),
         Expanded(
           child: _MentorDesc(
@@ -39,14 +35,6 @@ class CustomListItem extends StatelessWidget {
           ),
           flex: 3,
         ),
-        Expanded(
-          child: Column(
-            children: [
-              radioBut,
-              view,
-            ],
-          ),
-        )
       ]),
     );
   }
@@ -88,7 +76,7 @@ class _MentorDesc extends StatelessWidget {
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 5.0)),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Row(
                 children: [

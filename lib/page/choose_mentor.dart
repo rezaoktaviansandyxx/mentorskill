@@ -1,17 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/component/custom_list_item.dart';
-import 'package:mentorskill/model/user_model.dart';
-import 'package:mentorskill/page/payment.dart';
 import 'package:mentorskill/page/view_mentor.dart';
 
 class ChooseMentor extends StatefulWidget {
   const ChooseMentor({Key? key, required this.select}) : super(key: key);
 
   final String select;
+  // final String selectedMajor;
 
   @override
   _ChooseMentorState createState() => _ChooseMentorState();
@@ -22,28 +19,13 @@ class _ChooseMentorState extends State<ChooseMentor> {
   TextStyle style = TextStyle(color: Colors.blue, fontSize: 15);
   TextStyle style3 = TextStyle(fontSize: 20, color: Colors.white);
   //variabel
-  int selectedMentor = 0;
+  // int selectedMentor = 0;
+  // String selectedMentor = 'mentor_1';
   final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
-      floatingActionButton: ElevatedButton(
-        onPressed: () {
-          updateData();
-        },
-        child: Text(
-          'Bayar',
-          style: GoogleFonts.poppins(textStyle: style3),
-        ),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.orange,
-          padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('mentor')
@@ -58,58 +40,30 @@ class _ChooseMentorState extends State<ChooseMentor> {
                   itemBuilder: (BuildContext context, int index) {
                     QueryDocumentSnapshot? documentSnapshot =
                         snapshot.data?.docs[index];
-                    return Card(
-                        child: CustomListItem(
-                      photo: Image.network(documentSnapshot!['foto']),
-                      name: documentSnapshot != null
-                          ? (documentSnapshot['nama'])
-                          : '',
-                      job: documentSnapshot != null
-                          ? (documentSnapshot['kerja'])
-                          : '',
-                      rate: documentSnapshot != null
-                          ? (documentSnapshot['rating'])
-                          : '',
-                      reviews: documentSnapshot != null
-                          ? (documentSnapshot['review'])
-                          : '',
-                      radioBut: Radio(
-                        value: index,
-                        groupValue: selectedMentor,
-                        activeColor: Colors.black,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedMentor = value!.toInt();
-                          });
-                          print(value);
-                        },
-                      ),
-                      view: RichText(
-                        text: TextSpan(
-                            text: 'View',
-                            style: GoogleFonts.poppins(textStyle: style),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                if (selectedMentor != index) {
-                                  var errorSnackBar = SnackBar(
-                                    duration: Duration(milliseconds: 700),
-                                    content: Text('Pilih Mentor untuk melihat'),
-                                    backgroundColor: Colors.red,
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(errorSnackBar);
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ViewMentor(
-                                                selectedMajor: widget.select,
-                                                selectedMentor: selectedMentor,
-                                              )));
-                                }
-                              }),
-                      ),
-                    ));
+                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewMentor(
+                                  selectedMajor: widget.select,
+                                  selectedMentor: index))),
+                      child: Card(
+                          child: CustomListItem(
+                        photo: Image.network(documentSnapshot!['foto']),
+                        name: documentSnapshot != null
+                            ? (documentSnapshot['nama'])
+                            : '',
+                        job: documentSnapshot != null
+                            ? (documentSnapshot['kerja'])
+                            : '',
+                        rate: documentSnapshot != null
+                            ? (documentSnapshot['rating'])
+                            : '',
+                        reviews: documentSnapshot != null
+                            ? (documentSnapshot['review'])
+                            : '',
+                      )),
+                    );
                   });
             }
             return const Center(
@@ -119,23 +73,5 @@ class _ChooseMentorState extends State<ChooseMentor> {
             );
           }),
     );
-  }
-
-  updateData() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-    UserModel userModel = UserModel(saldo: 0);
-    userModel.id_mentor = selectedMentor;
-    await firebaseFirestore
-        .collection('users')
-        .doc(user!.uid)
-        .update({'id_mentor': selectedMentor});
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Payment(
-                  selectedMentor: selectedMentor,
-                  selectPayment: widget.select,
-                )));
   }
 }

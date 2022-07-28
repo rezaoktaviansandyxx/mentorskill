@@ -140,7 +140,7 @@ class _LoginState extends State<Login> {
           backgroundColor: Colors.green,
         );
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ChooseMajors()));
+            context, MaterialPageRoute(builder: (context) => BottomNavi()));
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }).catchError((e) {
         var errorSnackbar = SnackBar(
