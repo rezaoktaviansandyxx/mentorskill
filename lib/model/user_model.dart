@@ -8,6 +8,7 @@ class UserModel {
   String? phone;
   String? tglLahir;
   int saldo = 0;
+  String? url;
 
   UserModel(
       {this.uid,
@@ -18,7 +19,8 @@ class UserModel {
       this.nama,
       this.phone,
       this.tglLahir,
-      required this.saldo});
+      required this.saldo,
+      this.url});
 
   // reciving data from server
   factory UserModel.fromMap(map) {
@@ -32,6 +34,7 @@ class UserModel {
       phone: map['phone'],
       tglLahir: map['tglLahir'],
       saldo: map['saldo'],
+      url: map['url'],
     );
   }
   Map<String, dynamic> toMap() {
@@ -44,7 +47,8 @@ class UserModel {
       'nama': nama,
       'phone': phone,
       'tglLahir': tglLahir,
-      'saldo': saldo
+      'saldo': saldo,
+      'url': url,
     };
   }
 }

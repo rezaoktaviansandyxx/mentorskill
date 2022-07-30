@@ -7,7 +7,7 @@ import 'package:mentorskill/controller/bottom_navi.dart';
 import 'package:mentorskill/model/user_model.dart';
 
 class ClassMenu3 extends StatefulWidget {
-  ClassMenu3({Key? key}) : super(key: key);
+  const ClassMenu3({Key? key}) : super(key: key);
 
   @override
   State<ClassMenu3> createState() => _ClassMenu3State();
@@ -19,6 +19,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
   TextStyle style2 = TextStyle(fontSize: 22);
   //controller
   TextEditingController urlController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   //firebase
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel(saldo: 0);
@@ -140,35 +141,42 @@ class _ClassMenu3State extends State<ClassMenu3> {
                                 context: context,
                                 builder: (context) => AlertDialog(
                                       title: Text('Input URL'),
-                                      content: TextFormField(
-                                        controller: urlController,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Masukkan URL";
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        decoration: InputDecoration(
-                                            labelText: 'Input URL',
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  width: 3, color: Colors.blue),
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  width: 3, color: Colors.blue),
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            )),
+                                      content: Form(
+                                        key: _formKey,
+                                        child: TextFormField(
+                                          controller: urlController,
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return "Masukkan URL";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          decoration: InputDecoration(
+                                              labelText: 'Input URL',
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 3,
+                                                    color: Colors.blue),
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 3,
+                                                    color: Colors.blue),
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              )),
+                                        ),
                                       ),
                                       actions: [
                                         TextButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              addURL();
+                                            },
                                             child: Text('Simpan'))
                                       ],
                                     ));
@@ -200,5 +208,49 @@ class _ClassMenu3State extends State<ClassMenu3> {
           }),
     );
   }
-  
+
+  void addURL() async {
+    if (_formKey.currentState!.validate()) {
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      User? user = FirebaseAuth.instance.currentUser;
+      UserModel userModel = UserModel(saldo: 0);
+      userModel.url = urlController.text;
+      await firebaseFirestore
+          .collection('users')
+          .doc(user!.uid)
+          .update({'url': urlController.text})
+          .then((value) => showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    title: Text('Upload Berhasil'),
+                    content: Text(
+                        'Terimakasih sudah mengupload URL, sertifikat bisa diunduh setelah mentor selesai mengkoreksi.'),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            urlController.clear();
+                          },
+                          child: Text('OK'))
+                    ],
+                  )))
+          .catchError((err) {
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text('Upload Gagal'),
+                      content: Text(
+                          'Maaf, Upload anda gagal, silahkan ulangi kembali'),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('OK'))
+                      ],
+                    ));
+          });
+    }
+  }
 }
