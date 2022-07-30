@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/controller/bottom_navi.dart';
+import 'package:mentorskill/model/user_model.dart';
 
 class ClassMenu3 extends StatefulWidget {
   ClassMenu3({Key? key}) : super(key: key);
@@ -15,7 +18,23 @@ class _ClassMenu3State extends State<ClassMenu3> {
   TextStyle style = TextStyle(fontSize: 20);
   TextStyle style2 = TextStyle(fontSize: 22);
   //controller
-  TextFormField urlController = TextFormField();
+  TextEditingController urlController = TextEditingController();
+  //firebase
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel(saldo: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +53,17 @@ class _ClassMenu3State extends State<ClassMenu3> {
           ],
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        floatingActionButton: Row(
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('majors')
+              .doc('${loggedInUser.id_major}')
+              .collection('menuclass')
+              .snapshots(),
+          builder: (context, snapshot) {
+            QueryDocumentSnapshot? documentSnapshot = snapshot.data?.docs[2];
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              floatingActionButton: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
@@ -69,102 +96,109 @@ class _ClassMenu3State extends State<ClassMenu3> {
                   ),
                 ],
               ),
-        body: Container(
-          margin: EdgeInsets.fromLTRB(10, 55, 10, 0),
-          child: Column(
-            children: [
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        flex: 6,
-                        child: Text(
-                          '3. Final Project',
-                          style: GoogleFonts.poppins(textStyle: style),
+              body: Container(
+                margin: EdgeInsets.fromLTRB(10, 55, 10, 0),
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              flex: 6,
+                              child: Text(
+                                // '3. Final Project',
+                                ('3. ' + documentSnapshot!['judul']),
+                                style: GoogleFonts.poppins(textStyle: style),
+                              ),
+                            ),
+                            Flexible(
+                              flex: 4,
+                              child: LinearProgressIndicator(
+                                value: 0.2,
+                                color: Colors.blueAccent,
+                                backgroundColor: Colors.grey,
+                                minHeight: 10,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Flexible(
-                        flex: 4,
-                        child: LinearProgressIndicator(
-                          value: 0.2,
-                          color: Colors.blueAccent,
-                          backgroundColor: Colors.grey,
-                          minHeight: 10,
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Upload URL Projectmu yang telah anda ikuti dari awal sampai akhir',
-                    style: GoogleFonts.poppins(textStyle: style2),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: Text('Input URL Github'),
-                                content: TextFormField(
-                                  // controller: emailController,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Masukkan URL";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration: InputDecoration(
-                                      labelText: 'Input URL Github',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 3, color: Colors.blue),
-                                        borderRadius: BorderRadius.circular(15),
+                        Text(
+                          'Upload URL Projectmu yang telah anda ikuti dari awal sampai akhir',
+                          style: GoogleFonts.poppins(textStyle: style2),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text('Input URL'),
+                                      content: TextFormField(
+                                        controller: urlController,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return "Masukkan URL";
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        decoration: InputDecoration(
+                                            labelText: 'Input URL',
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  width: 3, color: Colors.blue),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                  width: 3, color: Colors.blue),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            )),
                                       ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 3, color: Colors.blue),
-                                        borderRadius: BorderRadius.circular(15),
-                                      )),
-                                ),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {}, child: Text('Simpan'))
-                                ],
-                              ));
-                    },
-                    icon: const FaIcon(
-                      FontAwesomeIcons.github,
-                      color: Colors.black,
-                      size: 50,
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {},
+                                            child: Text('Simpan'))
+                                      ],
+                                    ));
+                          },
+                          icon: const FaIcon(
+                            FontAwesomeIcons.github,
+                            color: Colors.black,
+                            size: 50,
+                          ),
+                          label: Text(
+                            'Upload URL',
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(fontSize: 20)),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.orange,
+                            padding: EdgeInsets.all(15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    label: Text(
-                      'Upload URL',
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(fontSize: 20)),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.orange,
-                      padding: EdgeInsets.all(15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
+  
 }

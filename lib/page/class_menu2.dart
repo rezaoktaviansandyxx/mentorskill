@@ -1,13 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mentorskill/model/user_model.dart';
 import 'package:mentorskill/page/class_menu3.dart';
 
-class ClassMenu2 extends StatelessWidget {
+class ClassMenu2 extends StatefulWidget {
   ClassMenu2({Key? key}) : super(key: key);
 
+  @override
+  State<ClassMenu2> createState() => _ClassMenu2State();
+}
+
+class _ClassMenu2State extends State<ClassMenu2> {
   TextStyle style = TextStyle(fontSize: 20);
   TextStyle style2 = TextStyle(fontSize: 18);
   TextStyle style3 = TextStyle(fontSize: 15);
+  //firebase
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel(saldo: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,144 +50,158 @@ class ClassMenu2 extends StatelessWidget {
           ],
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Container(
-          margin: EdgeInsets.fromLTRB(10, 30, 10, 0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    flex: 6,
-                    child: Text(
-                      '2. Pengembangan android dengan kotlin',
-                      style: GoogleFonts.poppins(textStyle: style),
+      child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('majors')
+              .doc('${loggedInUser.id_major}')
+              .collection('menuclass')
+              .snapshots(),
+          builder: (context, snapshot) {
+            QueryDocumentSnapshot? documentSnapshot = snapshot.data?.docs[1];
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Container(
+                margin: EdgeInsets.fromLTRB(10, 30, 10, 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 6,
+                          child: Text(
+                            // '2. Pengembangan android dengan kotlin',
+                            ('2. ' + documentSnapshot!['judul']),
+                            style: GoogleFonts.poppins(textStyle: style),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 4,
+                          child: LinearProgressIndicator(
+                            value: 0.2,
+                            color: Colors.blueAccent,
+                            backgroundColor: Colors.grey,
+                            minHeight: 10,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Flexible(
-                    flex: 4,
-                    child: LinearProgressIndicator(
-                      value: 0.2,
-                      color: Colors.blueAccent,
-                      backgroundColor: Colors.grey,
-                      minHeight: 10,
+                    Text(
+                      // '- Membangun User Interface yang interaktif dan responsif',
+                      ('- ' + documentSnapshot['tahap1']),
+                      style: GoogleFonts.poppins(textStyle: style2),
                     ),
-                  ),
-                ],
-              ),
-              Text(
-                '- Membangun User Interface yang interaktif dan responsif',
-                style: GoogleFonts.poppins(textStyle: style2),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Lihat PDF',
-                    style: GoogleFonts.poppins(textStyle: style3),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blueGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Lihat PDF',
+                          style: GoogleFonts.poppins(textStyle: style3),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Text(
+                      // '- Membuat navigasi aplikasi',
+                      ('- ' + documentSnapshot['tahap2']),
+                      style: GoogleFonts.poppins(textStyle: style2),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Lihat PDF',
+                          style: GoogleFonts.poppins(textStyle: style3),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      // '- Mengelola Database',
+                      ('- ' + documentSnapshot['tahap3']),
+                      style: GoogleFonts.poppins(textStyle: style2),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Lihat PDF',
+                          style: GoogleFonts.poppins(textStyle: style3),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      // '- Video Pembelajaran',
+                      ('- ' + documentSnapshot['tahap4']),
+                      style: GoogleFonts.poppins(textStyle: style2),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Lihat Video',
+                          style: GoogleFonts.poppins(textStyle: style3),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.arrow_back_rounded,
+                            size: 40,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ClassMenu3()));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 40,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                '- Membuat navigasi aplikasi',
-                style: GoogleFonts.poppins(textStyle: style2),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Lihat PDF',
-                    style: GoogleFonts.poppins(textStyle: style3),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blueGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              Text(
-                '- Mengelola Database',
-                style: GoogleFonts.poppins(textStyle: style2),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Lihat PDF',
-                    style: GoogleFonts.poppins(textStyle: style3),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blueGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              Text(
-                '- Video Pembelajaran',
-                style: GoogleFonts.poppins(textStyle: style2),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Lihat Video',
-                    style: GoogleFonts.poppins(textStyle: style3),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blueGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      size: 40,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ClassMenu3()));
-                    },
-                    icon: Icon(
-                      Icons.arrow_forward_rounded,
-                      size: 40,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
 }
