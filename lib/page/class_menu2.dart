@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/model/user_model.dart';
 import 'package:mentorskill/page/class_menu3.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ClassMenu2 extends StatefulWidget {
   ClassMenu2({Key? key}) : super(key: key);
@@ -95,7 +96,9 @@ class _ClassMenu2State extends State<ClassMenu2> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launchUrlString(documentSnapshot['tahap1pdf']);
+                        },
                         child: Text(
                           'Lihat PDF',
                           style: GoogleFonts.poppins(textStyle: style3),
@@ -116,7 +119,9 @@ class _ClassMenu2State extends State<ClassMenu2> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launchUrlString(documentSnapshot['tahap2pdf']);
+                        },
                         child: Text(
                           'Lihat PDF',
                           style: GoogleFonts.poppins(textStyle: style3),
@@ -137,7 +142,9 @@ class _ClassMenu2State extends State<ClassMenu2> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launchUrlString(documentSnapshot['tahap3pdf']);
+                        },
                         child: Text(
                           'Lihat PDF',
                           style: GoogleFonts.poppins(textStyle: style3),
@@ -158,7 +165,9 @@ class _ClassMenu2State extends State<ClassMenu2> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launchUrlString(documentSnapshot['tahap4video']);
+                        },
                         child: Text(
                           'Lihat Video',
                           style: GoogleFonts.poppins(textStyle: style3),

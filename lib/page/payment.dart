@@ -180,7 +180,7 @@ class _PaymentState extends State<Payment> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              if (int.parse('${loggedInUser.saldo}') <=
+                              if (int.parse('${loggedInUser.saldo}') <
                                   int.parse(documentSnapshot!['harga'])) {
                                 // var snackBar = SnackBar(
                                 //   duration: Duration(milliseconds: 1500),

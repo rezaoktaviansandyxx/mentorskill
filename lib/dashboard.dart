@@ -110,22 +110,26 @@ class _DashboardState extends State<Dashboard> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
-                            children: [
-                              CircleAvatar(
-                                radius: 75.0,
-                                backgroundImage:
-                                    NetworkImage((documentSnapshot['foto'])),
+                          Container(
+                            child: Flexible(
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 75.0,
+                                    backgroundImage:
+                                        NetworkImage((documentSnapshot['foto'])),
+                                  ),
+                                  Text(
+                                    documentSnapshot['nama'],
+                                    style: GoogleFonts.poppins(textStyle: style3),
+                                  ),
+                                  Text(
+                                    documentSnapshot['id_major'],
+                                    style: GoogleFonts.poppins(textStyle: style3),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                documentSnapshot['nama'],
-                                style: GoogleFonts.poppins(textStyle: style3),
-                              ),
-                              Text(
-                                documentSnapshot['id_major'],
-                                style: GoogleFonts.poppins(textStyle: style3),
-                              ),
-                            ],
+                            ),
                           ),
                           Column(
                             children: [
