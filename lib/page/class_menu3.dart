@@ -224,7 +224,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
               builder: (context) => AlertDialog(
                     title: Text('Upload Berhasil'),
                     content: Text(
-                        'Terimakasih sudah mengupload URL, sertifikat bisa diunduh setelah mentor selesai mengkoreksi.'),
+                        'Terimakasih sudah mengupload URL, sertifikat bisa diunduh di Akun Saya.'),
                     actions: [
                       TextButton(
                           onPressed: () {
