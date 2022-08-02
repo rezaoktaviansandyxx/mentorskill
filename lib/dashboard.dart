@@ -123,10 +123,6 @@ class _DashboardState extends State<Dashboard> {
                                     documentSnapshot['nama'],
                                     style: GoogleFonts.poppins(textStyle: style3),
                                   ),
-                                  Text(
-                                    documentSnapshot['id_major'],
-                                    style: GoogleFonts.poppins(textStyle: style3),
-                                  ),
                                 ],
                               ),
                             ),
