@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/controller/login.dart';
 import 'package:mentorskill/model/user_model.dart';
+import 'package:mentorskill/page/certificate.dart';
 import 'package:mentorskill/page/change_password.dart';
 import 'package:mentorskill/page/edit_profile.dart';
 
@@ -209,7 +210,22 @@ class _MyAccountState extends State<MyAccount> {
                         style: GoogleFonts.poppins(textStyle: style4),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () async{
+                          if (loggedInUser.url != null) {
+                            await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Certificate()));
+                          } else {
+                            var errorSnackBar = SnackBar(
+                              content: Text('Anda belum menyelesaikan kelas'),
+                              duration: Duration(milliseconds: 1000),
+                              backgroundColor: Colors.red,
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(errorSnackBar);
+                          }
+                        },
                         icon: Icon(
                           Icons.arrow_forward_rounded,
                           size: 40,
