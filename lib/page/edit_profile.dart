@@ -32,7 +32,7 @@ class _EditProfileState extends State<EditProfile> {
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel(saldo: 0);
-  
+
   @override
   void initState() {
     super.initState();
@@ -373,18 +373,7 @@ class _EditProfileState extends State<EditProfile> {
         firstDate: DateTime(1945),
         lastDate: DateTime(2040),
         builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.dark(
-                primary: Colors.deepPurple,
-                onPrimary: Colors.white,
-                surface: Colors.blueGrey,
-                onSurface: Colors.yellow,
-              ),
-              dialogBackgroundColor: Colors.blue[500],
-            ),
-            child: child!,
-          );
+          return child!;
         });
 
     if (newSelectedDate != null) {
