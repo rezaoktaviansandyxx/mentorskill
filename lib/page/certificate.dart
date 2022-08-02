@@ -71,7 +71,7 @@ class _CertificateState extends State<Certificate> {
                 ),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.orange,
-                  padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                  padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
