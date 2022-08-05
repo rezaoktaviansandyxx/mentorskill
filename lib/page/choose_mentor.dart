@@ -1,27 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mentorskill/component/custom_list_item.dart';
 import 'package:mentorskill/page/view_mentor.dart';
 
-class ChooseMentor extends StatefulWidget {
-  const ChooseMentor({Key? key, required this.select}) : super(key: key);
-
+class ChooseMentor extends StatelessWidget {
+  ChooseMentor({Key? key, required this.select}) : super(key: key);
   final String select;
-  // final String selectedMajor;
-
-  @override
-  _ChooseMentorState createState() => _ChooseMentorState();
-}
-
-class _ChooseMentorState extends State<ChooseMentor> {
   //style
   TextStyle style = TextStyle(color: Colors.blue, fontSize: 15);
   TextStyle style3 = TextStyle(fontSize: 20, color: Colors.white);
-  //variabel
-  // int selectedMentor = 0;
-  // String selectedMentor = 'mentor_1';
-  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +17,7 @@ class _ChooseMentorState extends State<ChooseMentor> {
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('mentor')
-              .where('id_major', isEqualTo: widget.select)
+              .where('id_major', isEqualTo: select)
               .snapshots(),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasError) {
@@ -45,7 +33,7 @@ class _ChooseMentorState extends State<ChooseMentor> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ViewMentor(
-                                  selectedMajor: widget.select,
+                                  selectedMajor: select,
                                   selectedMentor: index))),
                       child: Card(
                           child: CustomListItem(

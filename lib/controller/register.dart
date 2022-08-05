@@ -223,7 +223,7 @@ class _RegisterState extends State<Register> {
         postDetailsToFirestore();
       }).catchError((e) {
         var errorSnackbar = SnackBar(
-          content: Text('Akun Sudah Digunakan'),
+          content: Text("${e.message}"),
           duration: Duration(milliseconds: 700),
           backgroundColor: Colors.red,
         );

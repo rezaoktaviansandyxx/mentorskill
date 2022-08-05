@@ -61,6 +61,9 @@ class _ClassMenu3State extends State<ClassMenu3> {
               .collection('menuclass')
               .snapshots(),
           builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.active) {
+              return const Center(child: CircularProgressIndicator());
+            }
             QueryDocumentSnapshot? documentSnapshot = snapshot.data?.docs[2];
             return Scaffold(
               backgroundColor: Colors.transparent,

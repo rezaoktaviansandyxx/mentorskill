@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }).catchError((e) {
         var errorSnackbar = SnackBar(
-          content: Text('Email/Kata Sandi Salah'),
+          content: Text("${e.message}"),
           duration: Duration(milliseconds: 700),
           backgroundColor: Colors.red,
         );

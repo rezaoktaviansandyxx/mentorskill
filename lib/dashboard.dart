@@ -60,8 +60,11 @@ class _DashboardState extends State<Dashboard> {
               .where('id_mentor', isEqualTo: loggedInUser.id_mentor)
               .snapshots(),
           builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.active) {
+              return const Center(child: CircularProgressIndicator());
+            }
             QueryDocumentSnapshot? documentSnapshot = snapshot.data?.docs[0];
-            contactMentor = (documentSnapshot!['no_hp']);
+            contactMentor = (documentSnapshot?['no_hp']);
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: SingleChildScrollView(
@@ -116,12 +119,13 @@ class _DashboardState extends State<Dashboard> {
                                 children: [
                                   CircleAvatar(
                                     radius: 75.0,
-                                    backgroundImage:
-                                        NetworkImage((documentSnapshot['foto'])),
+                                    backgroundImage: NetworkImage(
+                                        (documentSnapshot?['foto'])),
                                   ),
                                   Text(
-                                    documentSnapshot['nama'],
-                                    style: GoogleFonts.poppins(textStyle: style3),
+                                    documentSnapshot?['nama'],
+                                    style:
+                                        GoogleFonts.poppins(textStyle: style3),
                                   ),
                                 ],
                               ),
@@ -147,13 +151,6 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ],
                       ),
-                      // Container(
-
-                      //   child: IconButton(
-                      //     onPressed: () {},
-                      //     icon: Icon(FontAwesomeIcons.book),
-                      //   ),
-                      // ),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -175,7 +172,6 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.orange,
-                          // padding: EdgeInsets.fromLTRB(left, top, right, bottom),
                           padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),

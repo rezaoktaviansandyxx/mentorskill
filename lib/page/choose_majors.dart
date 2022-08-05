@@ -75,27 +75,6 @@ class _ChooseMajorsState extends State<ChooseMajors> {
         ),
       ),
       child: Scaffold(
-        floatingActionButton: 
-            ElevatedButton(
-              onPressed: () {
-                addData();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChooseMentor(select: majors)));
-              },
-              child: Text(
-                'Selanjutnya',
-                style: GoogleFonts.poppins(textStyle: style),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.orange,
-                padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
@@ -148,8 +127,6 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                               setState(() {
                                 majors = value.toString();
                                 skillDefault = skillWebDev;
-                                // value = webDev;
-                                // webDev = skillnya, majors = valuenya
                               });
                             }),
                         RadioListTile(
@@ -161,7 +138,6 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                             onChanged: (value) {
                               setState(() {
                                 majors = value.toString();
-                                // value = androDev;
                                 skillDefault = skillAndroDev;
                               });
                             }),
@@ -174,7 +150,6 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                             onChanged: (value) {
                               setState(() {
                                 majors = value.toString();
-                                // value = graphicDesign;
                                 skillDefault = skillGraphicDesign;
                               });
                             }),
@@ -187,6 +162,27 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                   Expanded(
                     child: Text(skillDefault,
                         style: GoogleFonts.poppins(textStyle: style3)),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      addData();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ChooseMentor(select: majors)));
+                    },
+                    child: Text(
+                      'Selanjutnya',
+                      style: GoogleFonts.poppins(textStyle: style),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.orange,
+                      padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -206,11 +202,5 @@ class _ChooseMajorsState extends State<ChooseMajors> {
         .collection('users')
         .doc(user!.uid)
         .update({'id_major': majors});
-    // var snackBar = SnackBar(
-    //   duration: Duration(milliseconds: 700),
-    //   content: Text('Sukses Tersimpan'),
-    //   backgroundColor: Colors.green,
-    // );
-    // ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
