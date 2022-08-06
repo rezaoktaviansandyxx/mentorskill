@@ -38,6 +38,12 @@ class _ClassMenu3State extends State<ClassMenu3> {
   }
 
   @override
+  void dispose() {
+    urlController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

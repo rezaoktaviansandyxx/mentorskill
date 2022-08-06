@@ -34,6 +34,14 @@ class _ChangePasswordState extends State<ChangePassword> {
   }
 
   @override
+  void dispose() {
+    oldPasswordController.dispose();
+    newPasswordController.dispose();
+    repeatPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

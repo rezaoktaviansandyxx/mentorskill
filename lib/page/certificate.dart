@@ -2,14 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class Certificate extends StatefulWidget {
-  const Certificate({Key? key}) : super(key: key);
-
-  @override
-  State<Certificate> createState() => _CertificateState();
-}
-
-class _CertificateState extends State<Certificate> {
+class Certificate extends StatelessWidget {
+  Certificate({ Key? key }) : super(key: key);
   //style
   TextStyle style = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
   TextStyle style2 = TextStyle(fontSize: 20, color: Colors.white);

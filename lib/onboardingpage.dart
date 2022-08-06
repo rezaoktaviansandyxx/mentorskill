@@ -4,12 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:mentorskill/controller/login.dart';
 
-class OnBoardingPage extends StatefulWidget {
-  @override
-  _OnBoardingPageState createState() => _OnBoardingPageState();
-}
-
-class _OnBoardingPageState extends State<OnBoardingPage> {
+class OnBoardingPage extends StatelessWidget {
+  OnBoardingPage({ Key? key }) : super(key: key);
   final introKey = GlobalKey<IntroductionScreenState>();
   TextStyle style = TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700);
   TextStyle style2 = TextStyle(fontSize: 19.0);

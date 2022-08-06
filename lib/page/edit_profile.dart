@@ -15,9 +15,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   //controller
-  TextEditingController emailController = TextEditingController();
   TextEditingController fullNameController = TextEditingController();
-  // TextEditingController genderController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
   TextEditingController handphoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -254,28 +252,6 @@ class _EditProfileState extends State<EditProfile> {
             )),
       );
 
-  TextFormField emailText() => TextFormField(
-        controller: emailController,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return "Masukkan Email";
-          } else {
-            return null;
-          }
-        },
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            labelText: 'Email',
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: 3, color: Colors.blue),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: 3, color: Colors.blue),
-              borderRadius: BorderRadius.circular(15),
-            )),
-      );
-
   TextFormField birthdayText() => TextFormField(
         controller: birthdayController,
         onTap: () {
@@ -346,26 +322,6 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-// void _fetchUserData() async {
-//     try {
-//       User _currentUser = FirebaseAuth.instance.currentUser!;
-//       String authid = _currentUser.uid;
-//       FirebaseFirestore.instance
-//           .collection('users')
-//           .doc(user!.uid)
-//           .get()
-//           .then((value) {
-//         this.loggedInUser = UserModel.fromMap(value.data());
-//         setState(() {
-//           fullNameController.text = '${loggedInUser.nama}';
-//           birthdayController.text = '${loggedInUser.tglLahir}';
-//           handphoneController.text = '${loggedInUser.phone}';
-//         });
-//       });
-//     } catch (e) {
-//       print(e);
-//     }
-//   }
   _selectDate(BuildContext context) async {
     DateTime? newSelectedDate = await showDatePicker(
         context: context,
