@@ -160,30 +160,58 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                     height: 30,
                   ),
                   Expanded(
-                    child: Text(skillDefault,
-                        style: GoogleFonts.poppins(textStyle: style3)),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      addData();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ChooseMentor(select: majors)));
-                    },
-                    child: Text(
-                      'Selanjutnya',
-                      style: GoogleFonts.poppins(textStyle: style),
+                    child: Column(
+                      children: [
+                        Text(skillDefault,
+                            style: GoogleFonts.poppins(textStyle: style3)),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            addData();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ChooseMentor(select: majors)));
+                          },
+                          child: Text(
+                            'Selanjutnya',
+                            style: GoogleFonts.poppins(textStyle: style),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.orange,
+                            padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.orange,
-                      padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
                   ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     addData();
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) =>
+                  //                 ChooseMentor(select: majors)));
+                  //   },
+                  //   child: Text(
+                  //     'Selanjutnya',
+                  //     style: GoogleFonts.poppins(textStyle: style),
+                  //   ),
+                  //   style: ElevatedButton.styleFrom(
+                  //     primary: Colors.orange,
+                  //     padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

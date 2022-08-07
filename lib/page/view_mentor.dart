@@ -28,12 +28,12 @@ class ViewMentor extends StatelessWidget {
             .where('id_major', isEqualTo: selectedMajor)
             .snapshots(),
         builder: (context, snapshot) {
-          QueryDocumentSnapshot? documentSnapshot =
-              snapshot.data?.docs[selectedMentor];
-          documentId = documentSnapshot!.get('id_mentor');
           if (snapshot.hasError) {
             return Text('Something went wrong');
           } else if (snapshot.hasData || snapshot.data != null) {
+            QueryDocumentSnapshot? documentSnapshot =
+              snapshot.data?.docs[selectedMentor];
+          documentId = documentSnapshot!.get('id_mentor');
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize:
