@@ -60,7 +60,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -94,7 +94,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                   ),
                   Text('Tentukan bidang apa yang kamu minati!',
                       style: GoogleFonts.poppins(textStyle: style4)),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Container(
@@ -113,7 +113,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                                 textStyle: style4, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           thickness: 2,
                           color: Colors.black,
                         ),
@@ -156,7 +156,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Expanded(
@@ -164,7 +164,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                       children: [
                         Text(skillDefault,
                             style: GoogleFonts.poppins(textStyle: style3)),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         ElevatedButton(
@@ -191,27 +191,6 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                       ],
                     ),
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     addData();
-                  //     Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (context) =>
-                  //                 ChooseMentor(select: majors)));
-                  //   },
-                  //   child: Text(
-                  //     'Selanjutnya',
-                  //     style: GoogleFonts.poppins(textStyle: style),
-                  //   ),
-                  //   style: ElevatedButton.styleFrom(
-                  //     primary: Colors.orange,
-                  //     padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),

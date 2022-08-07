@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/controller/bottom_navi.dart';
 import 'package:mentorskill/controller/register.dart';
-import 'package:mentorskill/page/choose_majors.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -82,6 +81,8 @@ class _LoginState extends State<Login> {
                   ElevatedButton(
                     onPressed: () {
                       signIn(emailController.text, passController.text);
+                      emailController.dispose();
+                      passController.dispose();
                     },
                     child: Text(
                       'Login',

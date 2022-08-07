@@ -55,8 +55,7 @@ class _MentorDesc extends StatelessWidget {
   final String reviews;
 
   //style
-  TextStyle style = TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0);
-  TextStyle style2 = TextStyle(fontSize: 14.0);
+  TextStyle style2 = const TextStyle(fontSize: 14.0);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +66,9 @@ class _MentorDesc extends StatelessWidget {
         children: [
           Text(
             name,
-            style: GoogleFonts.poppins(textStyle: style),
+            style: GoogleFonts.poppins(
+              textStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0),
+            ),
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 5.0)),
           Text(
@@ -84,7 +85,7 @@ class _MentorDesc extends StatelessWidget {
                     rate,
                     style: GoogleFonts.poppins(textStyle: style2),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.star,
                     color: Colors.orange,
                   ),
@@ -96,7 +97,7 @@ class _MentorDesc extends StatelessWidget {
                     reviews,
                     style: GoogleFonts.poppins(textStyle: style2),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.comment,
                     color: Colors.orange,
                   ),

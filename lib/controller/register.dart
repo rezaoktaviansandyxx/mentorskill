@@ -35,6 +35,15 @@ class _RegisterState extends State<Register> {
   }
 
   @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passController.dispose();
+    cPassController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -75,6 +84,10 @@ class _RegisterState extends State<Register> {
                   ElevatedButton(
                     onPressed: () {
                       signUp(emailController.text, passController.text);
+                      nameController.dispose();
+                      emailController.dispose();
+                      passController.dispose();
+                      cPassController.dispose();
                     },
                     child: Text(
                       'Daftar',
@@ -256,7 +269,9 @@ class _RegisterState extends State<Register> {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => ChooseMajors()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => ChooseMajors()),
+        (route) => false);
   }
 }

@@ -7,8 +7,8 @@ class ChooseMentor extends StatelessWidget {
   ChooseMentor({Key? key, required this.select}) : super(key: key);
   final String select;
   //style
-  TextStyle style = TextStyle(color: Colors.blue, fontSize: 15);
-  TextStyle style3 = TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style = const TextStyle(color: Colors.blue, fontSize: 15);
+  TextStyle style3 = const TextStyle(fontSize: 20, color: Colors.white);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ChooseMentor extends StatelessWidget {
               .snapshots(),
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasError) {
-              return Text('Something went wrong');
+              return const Text('Something went wrong');
             } else if (snapshot.hasData || snapshot.data != null) {
               return ListView.builder(
                   itemCount: snapshot.data?.docs.length,
@@ -38,16 +38,16 @@ class ChooseMentor extends StatelessWidget {
                       child: Card(
                           child: CustomListItem(
                         photo: Image.network(documentSnapshot!['foto']),
-                        name: documentSnapshot != null
+                        name: documentSnapshot.exists
                             ? (documentSnapshot['nama'])
                             : '',
-                        job: documentSnapshot != null
+                        job: documentSnapshot.exists
                             ? (documentSnapshot['kerja'])
                             : '',
-                        rate: documentSnapshot != null
+                        rate: documentSnapshot.exists
                             ? (documentSnapshot['rating'])
                             : '',
-                        reviews: documentSnapshot != null
+                        reviews: documentSnapshot.exists
                             ? (documentSnapshot['review'])
                             : '',
                       )),

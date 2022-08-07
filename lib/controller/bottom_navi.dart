@@ -13,9 +13,9 @@ class BottomNavi extends StatefulWidget {
 class _BottomNaviState extends State<BottomNavi> {
   int currentIndex = 0;
   final List<Widget> body = [
-    Dashboard(),
+    const Dashboard(),
     Inbox(),
-    MyAccount(),
+    const MyAccount(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _BottomNaviState extends State<BottomNavi> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: ontap,
         currentIndex: currentIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
@@ -59,7 +59,8 @@ class _BottomNaviState extends State<BottomNavi> {
       ),
     );
   }
-  void ontap(int index){
+
+  void ontap(int index) {
     setState(() {
       currentIndex = index;
     });
