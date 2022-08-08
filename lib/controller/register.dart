@@ -236,7 +236,7 @@ class _RegisterState extends State<Register> {
         postDetailsToFirestore();
       }).catchError((e) {
         var errorSnackbar = SnackBar(
-          content: Text("${e.message}"),
+          content: Text("Akun sudah digunakan"),
           duration: Duration(milliseconds: 700),
           backgroundColor: Colors.red,
         );
@@ -271,7 +271,7 @@ class _RegisterState extends State<Register> {
 
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => ChooseMajors()),
+        MaterialPageRoute(builder: (context) => const ChooseMajors()),
         (route) => false);
   }
 }
