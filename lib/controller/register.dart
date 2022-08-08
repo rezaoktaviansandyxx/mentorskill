@@ -15,9 +15,9 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   //style
-  TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
-  TextStyle style2 = TextStyle(fontSize: 20);
-  TextStyle style3 = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
+  TextStyle style = const TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style2 = const TextStyle(fontSize: 20);
+  TextStyle style3 = const TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
   //controller
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -46,7 +46,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -64,7 +64,7 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+            margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
             height: MediaQuery.of(context).size.height,
             child: Form(
               key: _formKey,
@@ -84,10 +84,6 @@ class _RegisterState extends State<Register> {
                   ElevatedButton(
                     onPressed: () {
                       signUp(emailController.text, passController.text);
-                      nameController.dispose();
-                      emailController.dispose();
-                      passController.dispose();
-                      cPassController.dispose();
                     },
                     child: Text(
                       'Daftar',
@@ -95,13 +91,13 @@ class _RegisterState extends State<Register> {
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                      padding: const EdgeInsets.fromLTRB(150, 10, 150, 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.black,
                   ),
@@ -113,7 +109,8 @@ class _RegisterState extends State<Register> {
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => Login()),
+                          MaterialPageRoute(
+                              builder: (context) => const Login()),
                           (route) => false);
                     },
                     child: Text(
@@ -122,7 +119,7 @@ class _RegisterState extends State<Register> {
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                      padding: const EdgeInsets.fromLTRB(150, 10, 150, 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -235,7 +232,7 @@ class _RegisterState extends State<Register> {
           .then((value) {
         postDetailsToFirestore();
       }).catchError((e) {
-        var errorSnackbar = SnackBar(
+        var errorSnackbar = const SnackBar(
           content: Text("Akun sudah digunakan"),
           duration: Duration(milliseconds: 700),
           backgroundColor: Colors.red,
@@ -262,7 +259,7 @@ class _RegisterState extends State<Register> {
         .collection('users')
         .doc(user.uid)
         .set(userModel.toMap());
-    var snackBar = SnackBar(
+    var snackBar = const SnackBar(
       content: Text('Akun Berhasil dibuat'),
       duration: Duration(milliseconds: 700),
       backgroundColor: Colors.green,

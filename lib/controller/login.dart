@@ -13,9 +13,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   //style
-  TextStyle style = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
-  TextStyle style2 = TextStyle(fontSize: 20);
-  TextStyle style3 = TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style = const TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
+  TextStyle style2 = const TextStyle(fontSize: 20);
+  TextStyle style3 = const TextStyle(fontSize: 20, color: Colors.white);
 
   //firebase
   final _auth = FirebaseAuth.instance;
@@ -44,7 +44,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -62,7 +62,7 @@ class _LoginState extends State<Login> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+            margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
             height: MediaQuery.of(context).size.height,
             child: Form(
               key: _formKey,
@@ -81,8 +81,6 @@ class _LoginState extends State<Login> {
                   ElevatedButton(
                     onPressed: () {
                       signIn(emailController.text, passController.text);
-                      emailController.dispose();
-                      passController.dispose();
                     },
                     child: Text(
                       'Login',
@@ -90,13 +88,13 @@ class _LoginState extends State<Login> {
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                      padding: const EdgeInsets.fromLTRB(150, 10, 150, 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.black,
                   ),
@@ -107,7 +105,7 @@ class _LoginState extends State<Login> {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Register()));
+                          MaterialPageRoute(builder: (context) => const Register()));
                     },
                     child: Text(
                       'Daftar',
@@ -115,7 +113,7 @@ class _LoginState extends State<Login> {
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                      padding: const EdgeInsets.fromLTRB(150, 10, 150, 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -135,16 +133,16 @@ class _LoginState extends State<Login> {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) {
-        var snackbar = SnackBar(
+        var snackbar = const SnackBar(
           content: Text('Anda berhasil masuk'),
           duration: Duration(milliseconds: 700),
           backgroundColor: Colors.green,
         );
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => BottomNavi()));
+            context, MaterialPageRoute(builder: (context) => const BottomNavi()));
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }).catchError((e) {
-        var errorSnackbar = SnackBar(
+        var errorSnackbar = const SnackBar(
           content: Text("Email/kata sandi salah"),
           duration: Duration(milliseconds: 700),
           backgroundColor: Colors.red,

@@ -1,7 +1,9 @@
 class UserModel {
   String? uid;
   String? email;
+  // ignore: non_constant_identifier_names
   String? id_major;
+  // ignore: non_constant_identifier_names
   String? id_mentor;
   String? jkel;
   String? nama;
@@ -13,7 +15,9 @@ class UserModel {
   UserModel(
       {this.uid,
       this.email,
+      // ignore: non_constant_identifier_names
       this.id_major,
+      // ignore: non_constant_identifier_names
       this.id_mentor,
       this.jkel,
       this.nama,

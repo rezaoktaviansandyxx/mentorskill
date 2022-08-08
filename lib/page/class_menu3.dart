@@ -15,8 +15,8 @@ class ClassMenu3 extends StatefulWidget {
 
 class _ClassMenu3State extends State<ClassMenu3> {
   //style
-  TextStyle style = TextStyle(fontSize: 20);
-  TextStyle style2 = TextStyle(fontSize: 22);
+  TextStyle style = const TextStyle(fontSize: 20);
+  TextStyle style2 = const TextStyle(fontSize: 22);
   //controller
   TextEditingController urlController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -32,7 +32,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -46,7 +46,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -80,7 +80,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back_rounded,
                       size: 40,
                     ),
@@ -89,13 +89,13 @@ class _ClassMenu3State extends State<ClassMenu3> {
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => BottomNavi()),
+                          MaterialPageRoute(builder: (context) => const BottomNavi()),
                           (route) => false);
                     },
                     child: Text(
                       'Kembali ke Beranda',
                       style: GoogleFonts.poppins(
-                          textStyle: TextStyle(fontSize: 20)),
+                          textStyle: const TextStyle(fontSize: 20)),
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blueGrey,
@@ -107,7 +107,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
                 ],
               ),
               body: Container(
-                margin: EdgeInsets.fromLTRB(10, 55, 10, 0),
+                margin: const EdgeInsets.fromLTRB(10, 55, 10, 0),
                 child: Column(
                   children: [
                     Column(
@@ -123,7 +123,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
                                 style: GoogleFonts.poppins(textStyle: style),
                               ),
                             ),
-                            Flexible(
+                            const Flexible(
                               flex: 4,
                               child: LinearProgressIndicator(
                                 value: 0.2,
@@ -134,14 +134,14 @@ class _ClassMenu3State extends State<ClassMenu3> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Text(
                           'Upload URL Projectmu yang telah anda ikuti dari awal sampai akhir',
                           style: GoogleFonts.poppins(textStyle: style2),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         ElevatedButton.icon(
@@ -149,7 +149,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
                             showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                      title: Text('Input URL'),
+                                      title: const Text('Input URL'),
                                       content: Form(
                                         key: _formKey,
                                         child: TextFormField(
@@ -186,7 +186,7 @@ class _ClassMenu3State extends State<ClassMenu3> {
                                             onPressed: () {
                                               addURL();
                                             },
-                                            child: Text('Simpan'))
+                                            child: const Text('Simpan'))
                                       ],
                                     ));
                           },
@@ -198,11 +198,11 @@ class _ClassMenu3State extends State<ClassMenu3> {
                           label: Text(
                             'Upload URL',
                             style: GoogleFonts.poppins(
-                                textStyle: TextStyle(fontSize: 20)),
+                                textStyle: const TextStyle(fontSize: 20)),
                           ),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.orange,
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -231,8 +231,8 @@ class _ClassMenu3State extends State<ClassMenu3> {
           .then((value) => showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                    title: Text('Upload Berhasil'),
-                    content: Text(
+                    title: const Text('Upload Berhasil'),
+                    content: const Text(
                         'Terimakasih sudah mengupload URL, sertifikat bisa diunduh di Akun Saya.'),
                     actions: [
                       TextButton(
@@ -241,22 +241,22 @@ class _ClassMenu3State extends State<ClassMenu3> {
                             Navigator.pop(context);
                             urlController.clear();
                           },
-                          child: Text('OK'))
+                          child: const Text('OK'))
                     ],
                   )))
           .catchError((err) {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                      title: Text('Upload Gagal'),
-                      content: Text(
+                      title: const Text('Upload Gagal'),
+                      content: const Text(
                           'Maaf, Upload anda gagal, silahkan ulangi kembali'),
                       actions: [
                         TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('OK'))
+                            child: const Text('OK'))
                       ],
                     ));
           });

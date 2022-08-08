@@ -18,11 +18,9 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   //style
-  TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
-
-  TextStyle style2 = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
-
-  TextStyle style3 = TextStyle(fontSize: 20);
+  TextStyle style = const TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style2 = const TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
+  TextStyle style3 = const TextStyle(fontSize: 20);
 
   //firebase
   User? user = FirebaseAuth.instance.currentUser;
@@ -36,7 +34,7 @@ class _PaymentState extends State<Payment> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {
         // var saldo = "${loggedInUser.saldo}";
       });
@@ -52,7 +50,7 @@ class _PaymentState extends State<Payment> {
 
     // final stream2 = FirebaseFirestore.instance.collection('users').snapshots();
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -87,10 +85,10 @@ class _PaymentState extends State<Payment> {
               // }
               // print();
               if (snapshot.hasError) {
-                return Text('Something went wrong');
+                return const Text('Something went wrong');
               } else if (snapshot.hasData || snapshot.data != null) {
                 return Container(
-                  margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -132,7 +130,7 @@ class _PaymentState extends State<Payment> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Row(
@@ -169,13 +167,13 @@ class _PaymentState extends State<Payment> {
                             ),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.orange,
-                              padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
+                              padding: const EdgeInsets.fromLTRB(140, 10, 140, 10),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           ElevatedButton(
@@ -227,7 +225,7 @@ class _PaymentState extends State<Payment> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        BottomNavi()),
+                                                        const BottomNavi()),
                                                 (route) => false);
                                           },
                                           child: const Text('OK')),
@@ -242,7 +240,7 @@ class _PaymentState extends State<Payment> {
                             ),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.orange,
-                              padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                              padding: const EdgeInsets.fromLTRB(150, 10, 150, 10),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),

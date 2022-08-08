@@ -40,6 +40,7 @@ class CustomListItem extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class _MentorDesc extends StatelessWidget {
   _MentorDesc({
     Key? key,
@@ -60,7 +61,7 @@ class _MentorDesc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(5.0, 10, 0, 10),
+      padding: const EdgeInsets.fromLTRB(5.0, 10, 0, 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

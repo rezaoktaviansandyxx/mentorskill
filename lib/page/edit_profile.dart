@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -20,9 +21,9 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController handphoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   //style
-  TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
-  TextStyle style2 = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
-  TextStyle style3 = TextStyle(fontSize: 15);
+  TextStyle style = const TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style2 = const TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
+  TextStyle style3 = const TextStyle(fontSize: 15);
   //variabel
   String jkel = 'Pria';
   DateTime? _selectedDate;
@@ -40,7 +41,7 @@ class _EditProfileState extends State<EditProfile> {
           .doc(user!.uid)
           .get()
           .then((value) {
-        this.loggedInUser = UserModel.fromMap(value.data());
+        loggedInUser = UserModel.fromMap(value.data());
         setState(() {
           fullNameController.text = '${loggedInUser.nama}';
           birthdayController.text = '${loggedInUser.tglLahir}';
@@ -49,7 +50,9 @@ class _EditProfileState extends State<EditProfile> {
         });
       });
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -64,7 +67,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -82,7 +85,7 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+            margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
             height: MediaQuery.of(context).size.height,
             child: Form(
               key: _formKey,
@@ -112,7 +115,7 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -165,7 +168,7 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -185,7 +188,7 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -205,7 +208,7 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -219,13 +222,13 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
+                      padding: const EdgeInsets.fromLTRB(140, 10, 140, 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
@@ -287,7 +290,6 @@ class _EditProfileState extends State<EditProfile> {
 //Post Edit Profile to users
 
     try {
-      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       User? user = _auth.currentUser;
       UserModel userModel = UserModel(saldo: 0);
 
@@ -305,16 +307,16 @@ class _EditProfileState extends State<EditProfile> {
         'phone': handphoneController.text,
         'jkel': jkel,
       });
-      var snackBar = SnackBar(
+      var snackBar = const SnackBar(
         content: Text('Simpan Berhasil'),
         duration: Duration(milliseconds: 700),
         backgroundColor: Colors.green,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => BottomNavi()));
+          context, MaterialPageRoute(builder: (context) => const BottomNavi()));
     } catch (e) {
-      var errorSnackBar = SnackBar(
+      var errorSnackBar = const SnackBar(
         content: Text('Tidak Tersimpan'),
         backgroundColor: Colors.red,
       );
@@ -340,7 +342,9 @@ class _EditProfileState extends State<EditProfile> {
             offset: birthdayController.text.length,
             affinity: TextAffinity.upstream));
     } else {
-      print("Date is not selected");
+      if (kDebugMode) {
+        print("Date is not selected");
+      }
     }
   }
 }

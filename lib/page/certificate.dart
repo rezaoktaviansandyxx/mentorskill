@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// ignore: must_be_immutable
 class Certificate extends StatelessWidget {
   Certificate({ Key? key }) : super(key: key);
   //style
-  TextStyle style = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
-  TextStyle style2 = TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style = const TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
+  TextStyle style2 = const TextStyle(fontSize: 20, color: Colors.white);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -32,7 +33,7 @@ class Certificate extends StatelessWidget {
         ),
         backgroundColor: Colors.transparent,
         body: Container(
-          margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+          margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -44,14 +45,14 @@ class Certificate extends StatelessWidget {
                   style: GoogleFonts.poppins(textStyle: style),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Image.asset(
                 'assets/images/sertifikat.png',
                 fit: BoxFit.contain,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
               ElevatedButton(
@@ -65,7 +66,7 @@ class Certificate extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.orange,
-                  padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
+                  padding: const EdgeInsets.fromLTRB(120, 10, 120, 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

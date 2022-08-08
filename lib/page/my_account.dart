@@ -17,10 +17,10 @@ class MyAccount extends StatefulWidget {
 
 class _MyAccountState extends State<MyAccount> {
   //style
-  TextStyle style = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
-  TextStyle style2 = TextStyle(fontSize: 25);
-  TextStyle style3 = TextStyle(fontSize: 35);
-  TextStyle style4 = TextStyle(fontSize: 15);
+  TextStyle style = const TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
+  TextStyle style2 = const TextStyle(fontSize: 25);
+  TextStyle style3 = const TextStyle(fontSize: 35);
+  TextStyle style4 = const TextStyle(fontSize: 15);
   //controller
   final _formKey = GlobalKey<FormState>();
   //variabel
@@ -37,7 +37,7 @@ class _MyAccountState extends State<MyAccount> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -45,7 +45,7 @@ class _MyAccountState extends State<MyAccount> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -63,7 +63,7 @@ class _MyAccountState extends State<MyAccount> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+            margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
             height: MediaQuery.of(context).size.height,
             child: Form(
               key: _formKey,
@@ -81,7 +81,7 @@ class _MyAccountState extends State<MyAccount> {
                           onPressed: () {
                             signOut();
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.exit_to_app,
                             size: 38,
                           ))
@@ -108,7 +108,7 @@ class _MyAccountState extends State<MyAccount> {
                           ],
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.account_circle_rounded,
                         size: 60,
                       ),
@@ -126,9 +126,9 @@ class _MyAccountState extends State<MyAccount> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => EditProfile()));
+                                    builder: (context) => const EditProfile()));
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.edit,
                             size: 30,
                           ))
@@ -147,7 +147,7 @@ class _MyAccountState extends State<MyAccount> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -164,7 +164,7 @@ class _MyAccountState extends State<MyAccount> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -181,7 +181,7 @@ class _MyAccountState extends State<MyAccount> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -198,7 +198,7 @@ class _MyAccountState extends State<MyAccount> {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -217,7 +217,7 @@ class _MyAccountState extends State<MyAccount> {
                                 MaterialPageRoute(
                                     builder: (context) => Certificate()));
                           } else {
-                            var errorSnackBar = SnackBar(
+                            var errorSnackBar = const SnackBar(
                               content: Text('Anda belum menyelesaikan kelas'),
                               duration: Duration(milliseconds: 1000),
                               backgroundColor: Colors.red,
@@ -226,14 +226,14 @@ class _MyAccountState extends State<MyAccount> {
                                 .showSnackBar(errorSnackBar);
                           }
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_forward_rounded,
                           size: 40,
                         ),
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
@@ -249,20 +249,20 @@ class _MyAccountState extends State<MyAccount> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ChangePassword()));
+                                  builder: (context) => const ChangePassword()));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_forward_rounded,
                           size: 40,
                         ),
                       )
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 2,
                     color: Colors.grey,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                 ],
@@ -277,16 +277,16 @@ class _MyAccountState extends State<MyAccount> {
   void signOut() async {
     try {
       await _auth.signOut();
-      var snackBar = SnackBar(
+      var snackBar = const SnackBar(
         content: Text('Berhasil Keluar'),
         duration: Duration(milliseconds: 700),
         backgroundColor: Colors.green,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => Login()), (route) => false);
+          MaterialPageRoute(builder: (context) => const Login()), (route) => false);
     } catch (e) {
-      var errorSnackBar = SnackBar(
+      var errorSnackBar = const SnackBar(
         content: Text('Tidak Keluar'),
         backgroundColor: Colors.red,
       );

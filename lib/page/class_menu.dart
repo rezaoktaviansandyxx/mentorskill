@@ -7,16 +7,16 @@ import 'package:mentorskill/page/class_menu2.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ClassMenu extends StatefulWidget {
-  ClassMenu({Key? key}) : super(key: key);
+  const ClassMenu({Key? key}) : super(key: key);
 
   @override
   State<ClassMenu> createState() => _ClassMenuState();
 }
 
 class _ClassMenuState extends State<ClassMenu> {
-  TextStyle style = TextStyle(fontSize: 20);
-  TextStyle style2 = TextStyle(fontSize: 18);
-  TextStyle style3 = TextStyle(fontSize: 15);
+  TextStyle style = const TextStyle(fontSize: 20);
+  TextStyle style2 = const TextStyle(fontSize: 18);
+  TextStyle style3 = const TextStyle(fontSize: 15);
 
   //firebase
   User? user = FirebaseAuth.instance.currentUser;
@@ -30,7 +30,7 @@ class _ClassMenuState extends State<ClassMenu> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -38,7 +38,7 @@ class _ClassMenuState extends State<ClassMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -66,7 +66,7 @@ class _ClassMenuState extends State<ClassMenu> {
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: Container(
-                margin: EdgeInsets.fromLTRB(10, 30, 10, 0),
+                margin: const EdgeInsets.fromLTRB(10, 30, 10, 0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -81,7 +81,7 @@ class _ClassMenuState extends State<ClassMenu> {
                             style: GoogleFonts.poppins(textStyle: style),
                           ),
                         ),
-                        Flexible(
+                        const Flexible(
                           flex: 4,
                           child: LinearProgressIndicator(
                             value: 0.2,
@@ -191,9 +191,9 @@ class _ClassMenuState extends State<ClassMenu> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ClassMenu2()));
+                                  builder: (context) => const ClassMenu2()));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_forward_rounded,
                           size: 40,
                         ),

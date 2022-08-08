@@ -7,16 +7,16 @@ import 'package:mentorskill/page/class_menu3.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ClassMenu2 extends StatefulWidget {
-  ClassMenu2({Key? key}) : super(key: key);
+  const ClassMenu2({Key? key}) : super(key: key);
 
   @override
   State<ClassMenu2> createState() => _ClassMenu2State();
 }
 
 class _ClassMenu2State extends State<ClassMenu2> {
-  TextStyle style = TextStyle(fontSize: 20);
-  TextStyle style2 = TextStyle(fontSize: 18);
-  TextStyle style3 = TextStyle(fontSize: 15);
+  TextStyle style = const TextStyle(fontSize: 20);
+  TextStyle style2 = const TextStyle(fontSize: 18);
+  TextStyle style3 = const TextStyle(fontSize: 15);
   //firebase
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel(saldo: 0);
@@ -29,7 +29,7 @@ class _ClassMenu2State extends State<ClassMenu2> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -37,7 +37,7 @@ class _ClassMenu2State extends State<ClassMenu2> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -65,7 +65,7 @@ class _ClassMenu2State extends State<ClassMenu2> {
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: Container(
-                margin: EdgeInsets.fromLTRB(10, 30, 10, 0),
+                margin: const EdgeInsets.fromLTRB(10, 30, 10, 0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -80,7 +80,7 @@ class _ClassMenu2State extends State<ClassMenu2> {
                             style: GoogleFonts.poppins(textStyle: style),
                           ),
                         ),
-                        Flexible(
+                        const Flexible(
                           flex: 4,
                           child: LinearProgressIndicator(
                             value: 0.2,
@@ -190,7 +190,7 @@ class _ClassMenu2State extends State<ClassMenu2> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_back_rounded,
                             size: 40,
                           ),
@@ -200,9 +200,9 @@ class _ClassMenu2State extends State<ClassMenu2> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ClassMenu3()));
+                                    builder: (context) => const ClassMenu3()));
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_forward_rounded,
                             size: 40,
                           ),

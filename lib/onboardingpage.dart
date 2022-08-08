@@ -4,12 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:mentorskill/controller/login.dart';
 
+// ignore: must_be_immutable
 class OnBoardingPage extends StatelessWidget {
   OnBoardingPage({ Key? key }) : super(key: key);
   final introKey = GlobalKey<IntroductionScreenState>();
-  TextStyle style = TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700);
-  TextStyle style2 = TextStyle(fontSize: 19.0);
-  TextStyle style3 = TextStyle(fontSize: 13.0, fontWeight: FontWeight.w700);
+  TextStyle style = const TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700);
+  TextStyle style2 = const TextStyle(fontSize: 19.0);
+  TextStyle style3 = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w700);
 
   void _onIntroEnd(context) {
     introKey.currentState?.animateScroll(0);
@@ -22,7 +23,7 @@ class OnBoardingPage extends StatelessWidget {
     var pageDecoration = PageDecoration(
       titleTextStyle: GoogleFonts.poppins(textStyle: style),
       bodyTextStyle: bodyStyle,
-      bodyPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      bodyPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       pageColor: Colors.transparent,
       imagePadding: EdgeInsets.zero,
     );
@@ -30,7 +31,7 @@ class OnBoardingPage extends StatelessWidget {
     return IntroductionScreen(
       key: introKey,
       globalBackgroundColor: Colors.blue,
-      globalHeader: Align(
+      globalHeader: const Align(
         alignment: Alignment.topRight,
       ),
       pages: [
@@ -69,7 +70,7 @@ class OnBoardingPage extends StatelessWidget {
       done: ElevatedButton(
         onPressed: () {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Login()));
+              context, MaterialPageRoute(builder: (context) => const Login()));
         },
         child: Text(
           'Mulai',

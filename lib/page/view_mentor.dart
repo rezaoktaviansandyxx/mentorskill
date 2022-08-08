@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mentorskill/model/user_model.dart';
 import 'package:mentorskill/page/payment.dart';
 
+// ignore: must_be_immutable
 class ViewMentor extends StatelessWidget {
   ViewMentor(
       {Key? key, required this.selectedMajor, required this.selectedMentor})
@@ -20,7 +21,7 @@ class ViewMentor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
+    TextStyle style = const TextStyle(fontSize: 20, color: Colors.white);
 
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -29,7 +30,7 @@ class ViewMentor extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong');
+            return const Text('Something went wrong');
           } else if (snapshot.hasData || snapshot.data != null) {
             QueryDocumentSnapshot? documentSnapshot =
               snapshot.data?.docs[selectedMentor];
@@ -50,7 +51,7 @@ class ViewMentor extends StatelessWidget {
                 ),
               ),
               body: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
@@ -74,25 +75,25 @@ class ViewMentor extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     flex: 2,
-                                    child: Container(
+                                    child: SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           1.5,
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                           Text(
-                                            (documentSnapshot != null
+                                            (documentSnapshot.exists
                                                 ? (documentSnapshot['nama'])
                                                 : ''),
                                             style: GoogleFonts.poppins(
                                                 textStyle: style1),
                                           ),
                                           Text(
-                                            (documentSnapshot != null
+                                            (documentSnapshot.exists
                                                 ? (documentSnapshot['kerja'])
                                                 : ''),
                                             overflow: TextOverflow.clip,
@@ -101,7 +102,7 @@ class ViewMentor extends StatelessWidget {
                                             textAlign: TextAlign.center,
                                           ),
                                           Container(
-                                            margin: EdgeInsets.fromLTRB(
+                                            margin: const EdgeInsets.fromLTRB(
                                                 80, 0, 80, 0),
                                             padding: const EdgeInsets.all(10),
                                             alignment: Alignment.center,
@@ -115,31 +116,31 @@ class ViewMentor extends StatelessWidget {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                    (documentSnapshot != null
+                                                    (documentSnapshot.exists
                                                         ? (documentSnapshot[
                                                             'rating'])
                                                         : ''),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 20,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     )),
-                                                SizedBox(width: 10),
-                                                Icon(Icons.star,
+                                                const SizedBox(width: 10),
+                                                const Icon(Icons.star,
                                                     color: Colors.white)
                                               ],
                                             ),
                                           ),
                                           Text(
-                                            (documentSnapshot != null
+                                            (documentSnapshot.exists
                                                 ? (documentSnapshot['review']) +
                                                     " ulasan"
                                                 : 'ulasan'),
                                             style: GoogleFonts.poppins(
                                                 textStyle: style3),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                         ],
@@ -148,7 +149,7 @@ class ViewMentor extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 1,
-                                    child: Container(
+                                    child: SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           1.0,
                                       child: Column(
@@ -156,10 +157,10 @@ class ViewMentor extends StatelessWidget {
                                           const Text(
                                             'Slot',
                                             style:
-                                                const TextStyle(fontSize: 20),
+                                                TextStyle(fontSize: 20),
                                           ),
                                           Container(
-                                            margin: EdgeInsets.fromLTRB(
+                                            margin: const EdgeInsets.fromLTRB(
                                                 30, 0, 30, 0),
                                             padding: const EdgeInsets.all(10),
                                             alignment: Alignment.center,
@@ -173,11 +174,11 @@ class ViewMentor extends StatelessWidget {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  (documentSnapshot != null
+                                                  (documentSnapshot.exists
                                                       ? (documentSnapshot[
                                                           'slot'])
                                                       : ''),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.bold,
@@ -192,7 +193,7 @@ class ViewMentor extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Container(
+                              SizedBox(
                                   width: 320,
                                   height: 215,
                                   child: Stack(children: <Widget>[
@@ -421,7 +422,7 @@ class ViewMentor extends StatelessWidget {
                                             width: 320,
                                             height: 47,
                                             child: const Padding(
-                                              padding: const EdgeInsets.only(
+                                              padding: EdgeInsets.only(
                                                   right: 180),
                                               child: VerticalDivider(
                                                 thickness: 2,
@@ -506,11 +507,11 @@ class ViewMentor extends StatelessWidget {
                                               color: Color.fromRGBO(
                                                   33, 160, 201, 1),
                                               borderRadius: BorderRadius.all(
-                                                  const Radius.elliptical(
+                                                  Radius.elliptical(
                                                       8, 8)),
                                             ))),
                                   ])),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               ElevatedButton(
@@ -528,7 +529,7 @@ class ViewMentor extends StatelessWidget {
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.orange,
-                                  padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
+                                  padding: const EdgeInsets.fromLTRB(70, 10, 70, 10),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),

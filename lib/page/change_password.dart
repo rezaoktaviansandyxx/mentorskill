@@ -13,8 +13,8 @@ class ChangePassword extends StatefulWidget {
 
 class _ChangePasswordState extends State<ChangePassword> {
   //style
-  TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
-  TextStyle style2 = TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
+  TextStyle style = const TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style2 = const TextStyle(fontSize: 45, fontWeight: FontWeight.bold);
   //variabel
   bool isHiddenPassword = true;
   //controller
@@ -44,7 +44,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -62,7 +62,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+            margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
             height: MediaQuery.of(context).size.height,
             child: Form(
               key: _formKey,
@@ -86,7 +86,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.orange,
-                      padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
+                      padding: const EdgeInsets.fromLTRB(140, 10, 140, 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -187,7 +187,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       );
 
   void _changePassword(String password) async {
-    User? user = await FirebaseAuth.instance.currentUser!;
+    User? user = FirebaseAuth.instance.currentUser!;
     String email = user.email!;
 
     //Create field for user to input old password
@@ -198,14 +198,12 @@ class _ChangePasswordState extends State<ChangePassword> {
 
     if (_formKey.currentState!.validate()) {
       try {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
-
         user.updatePassword(newPassword).then((_) async {
-          var snackBar = SnackBar(
+          var snackBar = const SnackBar(
             content: Text('Berhasil Mengganti Kata Sandi'),
             duration: Duration(milliseconds: 700),
             backgroundColor: Colors.green,
@@ -214,11 +212,11 @@ class _ChangePasswordState extends State<ChangePassword> {
           await _auth.signOut();
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => Login()),
+              MaterialPageRoute(builder: (context) => const Login()),
               (route) => false);
         }).catchError((error) {
           // + error.toString()
-          var errorSnackBar = SnackBar(
+          var errorSnackBar = const SnackBar(
             content: Text('Password Tidak Bisa Diganti'),
             duration: Duration(milliseconds: 700),
             backgroundColor: Colors.red,
@@ -227,14 +225,14 @@ class _ChangePasswordState extends State<ChangePassword> {
         });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
-          var eSnackBar = SnackBar(
+          var eSnackBar = const SnackBar(
             content: Text('User tidak ditemukan'),
             duration: Duration(milliseconds: 700),
             backgroundColor: Colors.red,
           );
           ScaffoldMessenger.of(context).showSnackBar(eSnackBar);
         } else if (e.code == 'wrong-password') {
-          var errSnackBar = SnackBar(
+          var errSnackBar = const SnackBar(
             content: Text('Kata sandi lama salah'),
             duration: Duration(milliseconds: 700),
             backgroundColor: Colors.red,

@@ -19,9 +19,9 @@ class _PaymentControlState extends State<PaymentControl> {
   TextEditingController nominalController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   //style
-  TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
-  TextStyle style2 = TextStyle(fontSize: 15, color: Colors.black);
-  TextStyle style3 = TextStyle(fontSize: 20);
+  TextStyle style = const TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style2 = const TextStyle(fontSize: 15, color: Colors.black);
+  TextStyle style3 = const TextStyle(fontSize: 20);
   //firebase
   final _auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
@@ -35,7 +35,7 @@ class _PaymentControlState extends State<PaymentControl> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {
         // var saldo = "${loggedInUser.saldo}";
       });
@@ -45,7 +45,7 @@ class _PaymentControlState extends State<PaymentControl> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -66,7 +66,7 @@ class _PaymentControlState extends State<PaymentControl> {
         ),
         backgroundColor: Colors.transparent,
         body: Container(
-          margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+          margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
           height: MediaQuery.of(context).size.height,
           child: Form(
             key: _formKey,
@@ -82,16 +82,16 @@ class _PaymentControlState extends State<PaymentControl> {
                       style: GoogleFonts.poppins(textStyle: style3),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Text('Masukkan jumlah nominal yang ingin diisi',
                         style: GoogleFonts.poppins(textStyle: style2)),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     nominalText(),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     // Align(
@@ -110,7 +110,7 @@ class _PaymentControlState extends State<PaymentControl> {
                   ),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orange,
-                    padding: EdgeInsets.fromLTRB(140, 10, 140, 10),
+                    padding: const EdgeInsets.fromLTRB(140, 10, 140, 10),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -162,7 +162,7 @@ class _PaymentControlState extends State<PaymentControl> {
                                 builder: (context) => Payment(
                                     selectedMentor: widget.selectedMentor)));
                       },
-                      child: Text('OK'))
+                      child: const Text('OK'))
                 ],
               ));
       // var snackBar = SnackBar(
@@ -184,7 +184,7 @@ class _PaymentControlState extends State<PaymentControl> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('OK'))
+                      child: const Text('OK'))
                 ],
               ));
       // var snackBar = SnackBar(

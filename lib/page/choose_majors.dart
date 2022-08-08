@@ -14,10 +14,10 @@ class ChooseMajors extends StatefulWidget {
 
 class _ChooseMajorsState extends State<ChooseMajors> {
   //style
-  TextStyle style = TextStyle(fontSize: 20, color: Colors.white);
-  TextStyle style2 = TextStyle(fontSize: 22);
-  TextStyle style3 = TextStyle(fontSize: 15);
-  TextStyle style4 = TextStyle(fontSize: 17);
+  TextStyle style = const TextStyle(fontSize: 20, color: Colors.white);
+  TextStyle style2 = const TextStyle(fontSize: 22);
+  TextStyle style3 = const TextStyle(fontSize: 15);
+  TextStyle style4 = const TextStyle(fontSize: 17);
   //variabel
   final _formKey = GlobalKey<FormState>();
   String majors = 'webDev';
@@ -34,7 +34,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -78,7 +78,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.fromLTRB(10, 30, 10, 0),
+            margin: const EdgeInsets.fromLTRB(10, 30, 10, 0),
             height: MediaQuery.of(context).size.height,
             child: Form(
               key: _formKey,
@@ -98,7 +98,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                     height: 30,
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.blue,
@@ -182,7 +182,7 @@ class _ChooseMajorsState extends State<ChooseMajors> {
                           ),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.orange,
-                            padding: EdgeInsets.fromLTRB(120, 10, 120, 10),
+                            padding: const EdgeInsets.fromLTRB(120, 10, 120, 10),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),

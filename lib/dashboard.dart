@@ -16,9 +16,9 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   //style
-  TextStyle style = TextStyle(fontSize: 20);
-  TextStyle style2 = TextStyle(fontSize: 35);
-  TextStyle style3 = TextStyle(fontSize: 18);
+  TextStyle style = const TextStyle(fontSize: 20);
+  TextStyle style2 = const TextStyle(fontSize: 35);
+  TextStyle style3 = const TextStyle(fontSize: 18);
   //firebase
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel(saldo: 0);
@@ -32,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -40,7 +40,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -69,7 +69,7 @@ class _DashboardState extends State<Dashboard> {
               backgroundColor: Colors.transparent,
               body: SingleChildScrollView(
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -84,7 +84,7 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.account_circle_rounded,
                             size: 100,
                           ),
@@ -106,29 +106,27 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         thickness: 2,
                         color: Colors.grey,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            child: Flexible(
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 75.0,
-                                    backgroundImage: NetworkImage(
-                                        (documentSnapshot?['foto'])),
-                                  ),
-                                  Text(
-                                    documentSnapshot?['nama'],
-                                    style:
-                                        GoogleFonts.poppins(textStyle: style3),
-                                  ),
-                                ],
-                              ),
+                          Flexible(
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  radius: 75.0,
+                                  backgroundImage: NetworkImage(
+                                      (documentSnapshot?['foto'])),
+                                ),
+                                Text(
+                                  documentSnapshot?['nama'],
+                                  style:
+                                      GoogleFonts.poppins(textStyle: style3),
+                                ),
+                              ],
                             ),
                           ),
                           Column(
@@ -138,7 +136,7 @@ class _DashboardState extends State<Dashboard> {
                                 style: GoogleFonts.poppins(textStyle: style3),
                               ),
                               IconButton(
-                                icon: FaIcon(
+                                icon: const FaIcon(
                                   FontAwesomeIcons.whatsapp,
                                   color: Colors.green,
                                   size: 40,
@@ -156,12 +154,12 @@ class _DashboardState extends State<Dashboard> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ClassMenu()));
+                                  builder: (context) => const ClassMenu()));
                         },
                         child: Row(
                           children: [
-                            Icon(FontAwesomeIcons.book),
-                            SizedBox(
+                            const Icon(FontAwesomeIcons.book),
+                            const SizedBox(
                               width: 25,
                             ),
                             Text(
@@ -172,13 +170,13 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.orange,
-                          padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
+                          padding: const EdgeInsets.fromLTRB(70, 10, 70, 10),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                     ],
@@ -196,6 +194,7 @@ class _DashboardState extends State<Dashboard> {
     var whatsappUrl = "whatsapp://send?phone=$phone";
     await canLaunchUrlString(whatsappUrl)
         ? launchUrlString(whatsappUrl)
+        // ignore: avoid_print
         : print(
             "open whatsapp app link or do a snackbar with notification that there is no whatsapp installed");
   }
