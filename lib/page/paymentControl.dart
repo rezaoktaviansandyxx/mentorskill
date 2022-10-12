@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -77,8 +78,7 @@ class _PaymentControlState extends State<PaymentControl> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Saldo anda tidak mencukupi\n' +
-                          'Anda harus mengisi saldo tersebut',
+                      'Saldo anda tidak mencukupi\n' 'Anda harus mengisi saldo tersebut',
                       style: GoogleFonts.poppins(textStyle: style3),
                       textAlign: TextAlign.center,
                     ),
